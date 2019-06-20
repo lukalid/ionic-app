@@ -9,6 +9,18 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import * as firebase from 'firebase';
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyCdQzJ6tsF6TngzOhbHQdjBNCJ0uMdcXPg',
+  authDomain: 'ionic-app-mobilno-racunarstvo.firebaseapp.com',
+  databaseURL: 'https://ionic-app-mobilno-racunarstvo.firebaseio.com',
+  projectId: 'ionic-app-mobilno-racunarstvo',
+  storageBucket: 'ionic-app-mobilno-racunarstvo.appspot.com',
+  messagingSenderId: '754349644267',
+  appId: '1:754349644267:web:341205df4c99e1d0'
+});
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
