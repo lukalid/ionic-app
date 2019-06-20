@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>Create an Account</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+    <form [formGroup]="formSignup" (ngSubmit)="onSignUp()">
+        <ion-list>
+            <ion-item>
+                <ion-label position="stacked">First name</ion-label>
+                <ion-input id="firstName" formControlName="firstName" margin-top="5" type="text"
+                           placeholder="Enter first name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Last name</ion-label>
+                <ion-input id="lastName" formControlName="lastName" margin-top="5" type="text"
+                           placeholder="Enter last name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Email</ion-label>
+                <ion-input id="email" formControlName="email" margin-top="5" type="email"
+                           placeholder="Enter email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Password</ion-label>
+                <ion-input id="password" formControlName="password" margin-top="5" type="password"
+                           placeholder="Enter password"></ion-input>
+
+                <ng-template [ngIf]="!isPasswordValid()">
+              <span>
+            <ion-icon *ngIf="doesPasswordHaveError('minlength')" name="close-circle" slot="start"
+                      color="danger"></ion-icon>
+            <ion-icon *ngIf="!doesPasswordHaveError('minlength')" name="checkmark-circle" slot="start"
+                      color="success"></ion-icon>
+            <span [ngClass]="{ 'text-danger': doesPasswordHaveError('minlength'), 'text-success': !doesPasswordHaveError('minlength') }">
+                Must be at least {{ minLength }} characters!
+            </span>
+          </span>
+
+                    <span>
+            <ion-icon *ngIf="doesPasswordHaveError('hasNumber')" name="close-circle" slot="start"
+                      color="danger"></ion-icon>
+            <ion-icon *ngIf="!doesPasswordHaveError('hasNumber')" name="checkmark-circle" slot="start"
+                      color="success"></ion-icon>
+            <span [ngClass]="{ 'text-danger': doesPasswordHaveError('hasNumber'), 'text-success': !doesPasswordHaveError('hasNumber') }">
+                Must contain at least 1 number!
+            </span>
+          </span>
+
+                    <span>
+            <ion-icon *ngIf="doesPasswordHaveError('hasCapitalCase')" name="close-circle" slot="start"
+                      color="danger"></ion-icon>
+            <ion-icon *ngIf="!doesPasswordHaveError('hasCapitalCase')" name="checkmark-circle" slot="start"
+                      color="success"></ion-icon>
+            <span [ngClass]="{ 'text-danger': doesPasswordHaveError('hasCapitalCase'), 'text-success': !doesPasswordHaveError('hasCapitalCase') }">
+                Must contain at least 1 capital case letter!
+            </span>
+          </span>
+
+                    <span>
+            <ion-icon *ngIf="doesPasswordHaveError('hasSmallCase')" name="close-circle" slot="start"
+                      color="danger"></ion-icon>
+            <ion-icon *ngIf="!doesPasswordHaveError('hasSmallCase')" name="checkmark-circle" slot="start"
+                      color="success"></ion-icon>
+            <span [ngClass]="{ 'text-danger': doesPasswordHaveError('hasSmallCase'), 'text-success': !doesPasswordHaveError('hasSmallCase') }">
+                Must contain at least 1 small case letter!
+            </span>
+          </span>
+                </ng-template>
+
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Confirm password</ion-label>
+                <ion-input id="confirmPassword" formControlName="confirmPassword" margin-top="5" type="password"
+                           placeholder="Confirm password"></ion-input>
+            </ion-item>
+        </ion-list>
+
+        <ion-button expand="block" fill="outline" color="primary" type="submit">
+            <ion-icon slot="start" name="log-in"></ion-icon>
+            Sign Up
+        </ion-button>
+    </form>
+
+</ion-content>
