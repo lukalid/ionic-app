@@ -1,15 +1,43 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar [style.color]="getHeaderFooterColor()">
         <ion-title>
-            Ionic Blank
+            <h1 style="font-weight: bold;">TO DO APP</h1>
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <div class="ion-padding">
-        The world is your oyster.
-        <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will
-            be your guide.</p>
-    </div>
+<ion-content padding>
+    
+    <ion-card>
+
+        <ion-card-content>
+            <img [src]="avatarUrl" alt="avatar">
+        </ion-card-content>
+
+        <ion-card-header>
+            <ion-card-title>
+                <h2>Welcome to the best TO DO APP!</h2>
+            </ion-card-title>
+            <ion-card-subtitle>
+                <h3>So much to do, so little time...
+                    Better start today, err, now!</h3>
+            </ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+
+    <ion-button fill="none" size="big">
+        <span [style.color]="getHeaderFooterColor()" style="font-weight: bold;">Login</span>
+    </ion-button>
+    <ion-button fill="none" size="big">
+        <span [style.color]="getHeaderFooterColor()" style="font-weight: bold;">Register</span>
+    </ion-button>
+
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar [style.color]="getHeaderFooterColor()">
+        <ion-title>
+            <h4 style="font-weight: bold;">&copy; Copyright 2019 Biggy.com</h4>
+        </ion-title>
+    </ion-toolbar>
+</ion-footer>
