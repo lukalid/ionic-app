@@ -35,7 +35,7 @@
             <ion-icon *ngIf="!doesPasswordHaveError('minlength')" name="checkmark-circle" slot="start"
                       color="success"></ion-icon>
             <span [ngClass]="{ 'text-danger': doesPasswordHaveError('minlength'), 'text-success': !doesPasswordHaveError('minlength') }">
-                Must be at least {{ minLength }} characters!
+                Must be at least {{ passwordMinLength }} characters!
             </span>
           </span>
 

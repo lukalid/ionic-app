@@ -16,11 +16,11 @@ export class AuthService {
             (response) => {
                 const user = new UserModel(response.user.uid, firstName, lastName, email, password);
                 this.http.post(this.url, user).subscribe(
-                    () => this.utilService.showToast('Account has been created.'),
-                    (error) => this.utilService.showToast(error)
+                    () => this.utilService.showToast('Account has been created.', 'success'),
+                    (error) => this.utilService.showToast(error, 'danger')
                 );
             },
-            (error) => this.utilService.showToast(error)
+            (error) => this.utilService.showToast(error, 'danger')
         );
     }
 
