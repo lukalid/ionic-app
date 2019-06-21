@@ -24,4 +24,13 @@ export class TodoService {
         }
     }
 
+    queryForTodoList() {
+        if (this.authService.isUserSignedIn()) {
+            const userUid = this.authService.getCurrentUserUid();
+            return firebase.firestore().collection('todo-list')
+                .where('userUid', '==', userUid);
+        }
+        return null;
+    }
+
 }
