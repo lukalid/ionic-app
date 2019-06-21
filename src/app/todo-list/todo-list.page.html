@@ -4,13 +4,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  CONTENT
+<ion-content padding>
+
+  <ion-button routerLink="/add-todo" expand="block" fill="none" size="big" type="submit">
+      <span [style.color]="avatarColor" class="btn-login-register">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add
+      </span>
+  </ion-button>
+
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button (click)="onBack()" expand="block" fill="none" size="big" type="submit">
+    <ion-button (click)="onBack()" expand="block" fill="none" size="big">
       <span [style.color]="avatarColor" class="btn-login-register">
         <ion-icon slot="start" name="arrow-back"></ion-icon>
         Back

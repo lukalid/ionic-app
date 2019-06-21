@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Util} from '../util/util';
-import {ActivatedRoute, Router} from '@angular/router';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-todo-list',
@@ -11,14 +11,14 @@ export class TodoListPage implements OnInit {
 
   avatarColor: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private navController: NavController) { }
 
   ngOnInit() {
     this.avatarColor = Util.getAvatarColor();
   }
 
   onBack() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.navController.back();
   }
 
 }

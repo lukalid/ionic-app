@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Util } from '../util/util';
+import {NavController} from '@ionic/angular';
 
 @Component({
     selector: 'app-signin',
@@ -14,8 +14,7 @@ export class SigninPage implements OnInit {
     formSignIn: FormGroup;
     avatarColor: string;
 
-    constructor(private formBuilder: FormBuilder, private authService: AuthService,
-                private router: Router, private route: ActivatedRoute) { }
+    constructor(private formBuilder: FormBuilder, private authService: AuthService, private navController: NavController) { }
 
     ngOnInit() {
         this.formSignIn = this.createSigninForm();
@@ -30,11 +29,13 @@ export class SigninPage implements OnInit {
     }
 
     onSignIn() {
-        this.authService.signIn(this.formSignIn.value.email, this.formSignIn.value.password);
+        if (this.formSignIn.valid) {
+            this.authService.signIn(this.formSignIn.value.email, this.formSignIn.value.password);
+        }
     }
 
     onBack() {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.navController.navigateBack('/home');
     }
 
 }

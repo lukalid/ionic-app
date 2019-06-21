@@ -13,6 +13,7 @@ import * as firebase from 'firebase';
 import { AuthService } from './auth/auth.service';
 import { UtilService } from './util/util.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TodoService } from './todo-list/todo.service';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyCdQzJ6tsF6TngzOhbHQdjBNCJ0uMdcXPg',
@@ -24,15 +25,12 @@ firebase.initializeApp({
   appId: '1:754349644267:web:341205df4c99e1d0'
 });
 
-firebase.firestore().settings({
-  timestampsInSnapshots: true
-});
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
+    TodoService,
     AuthService,
     UtilService,
     StatusBar,

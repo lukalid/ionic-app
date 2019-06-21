@@ -15,10 +15,10 @@
             </ion-item>
             <ion-item>
                 <ion-label position="stacked">Password</ion-label>
-                <ion-input id="password" formControlName="password" margin-top="5" type="password"
+                <ion-input (click)="passwordIsTouched()" id="password" formControlName="password" margin-top="5" type="password"
                            placeholder="Enter password"></ion-input>
 
-                <ng-template [ngIf]="!isPasswordValid()">
+                <ng-template [ngIf]="formSignup.controls['password'].touched && !isPasswordValid()">
               <span>
             <ion-icon *ngIf="doesPasswordHaveError('minlength')" name="close-circle" slot="start"
                       color="danger"></ion-icon>
@@ -79,7 +79,7 @@
 
 <ion-footer>
     <ion-toolbar>
-        <ion-button (click)="onBack()" expand="block" fill="none" size="big" type="submit">
+        <ion-button (click)="onBack()" expand="block" fill="none" size="big">
       <span [style.color]="avatarColor" class="btn-login-register">
         <ion-icon slot="start" name="arrow-back"></ion-icon>
         Back

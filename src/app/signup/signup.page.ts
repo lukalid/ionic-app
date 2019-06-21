@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from './custom-validators';
 import { AuthService } from '../auth/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Util } from '../util/util';
+import {NavController} from '@ionic/angular';
 
 @Component({
     selector: 'app-signup',
@@ -16,8 +16,7 @@ export class SignupPage implements OnInit {
     passwordMinLength = 8;
     avatarColor: string;
 
-    constructor(private formBuilder: FormBuilder, private authService: AuthService,
-                private router: Router, private route: ActivatedRoute) { }
+    constructor(private formBuilder: FormBuilder, private authService: AuthService, private navController: NavController) { }
 
     ngOnInit() {
         this.formSignup = this.createSignupForm();
@@ -68,7 +67,11 @@ export class SignupPage implements OnInit {
     }
 
     onBack() {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.navController.navigateBack('/home');
+    }
+
+    passwordIsTouched() {
+        this.formSignup.controls['password'].markAsTouched();
     }
 
 }

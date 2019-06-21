@@ -57,4 +57,8 @@ export class AuthService implements OnInit {
         this.router.navigate(['/home']);
     }
 
+    getCurrentUserUid(): string {
+        return firebase.auth().currentUser.uid;
+    }
+
 }
