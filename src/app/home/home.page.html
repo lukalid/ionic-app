@@ -12,10 +12,10 @@
                     </ion-button>
                 </ng-template>
                 <ng-template [ngIf]="!isUserSignedIn()">
-                    <ion-button fill="none" size="big" (click)="onSignIn()">
+                    <ion-button fill="none" size="big" routerLink="/signin">
                         <span [style.color]="avatarColor" class="btn-login-register">Sign In</span>
                     </ion-button>
-                    <ion-button fill="none" size="big" (click)="onSignUp()">
+                    <ion-button fill="none" size="big" routerLink="/signup">
                         <span [style.color]="avatarColor" class="btn-login-register">Sign Up</span>
                     </ion-button>
                 </ng-template>

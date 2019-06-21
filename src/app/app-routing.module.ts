@@ -4,8 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
-  { path: 'signup/:avatarColor', loadChildren: './signup/signup.module#SignupPageModule' },
-  { path: 'signin/:avatarColor', loadChildren: './signin/signin.module#SigninPageModule' },
+  { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
+  { path: 'signin', loadChildren: './signin/signin.module#SigninPageModule' },
   { path: 'todo-list', loadChildren: './todo-list/todo-list.module#TodoListPageModule' },
 ];
 

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../auth/auth.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { AuthService } from '../auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Util } from '../util/util';
 
 @Component({
     selector: 'app-signin',
@@ -18,7 +19,7 @@ export class SigninPage implements OnInit {
 
     ngOnInit() {
         this.formSignIn = this.createSigninForm();
-        this.avatarColor = this.route.snapshot.paramMap.get('avatarColor');
+        this.avatarColor = Util.getAvatarColor();
     }
 
     private createSigninForm(): FormGroup {
@@ -33,7 +34,7 @@ export class SigninPage implements OnInit {
     }
 
     onBack() {
-        this.router.navigate(['../../'], { relativeTo: this.route });
+        this.router.navigate(['../'], { relativeTo: this.route });
     }
 
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from './custom-validators';
 import { AuthService } from '../auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Util } from '../util/util';
 
 @Component({
     selector: 'app-signup',
@@ -20,7 +21,7 @@ export class SignupPage implements OnInit {
 
     ngOnInit() {
         this.formSignup = this.createSignupForm();
-        this.avatarColor = this.route.snapshot.paramMap.get('avatarColor');
+        this.avatarColor = Util.getAvatarColor();
     }
 
     private createSignupForm(): FormGroup {
@@ -67,7 +68,7 @@ export class SignupPage implements OnInit {
     }
 
     onBack() {
-        this.router.navigate(['../../'], { relativeTo: this.route });
+        this.router.navigate(['../'], { relativeTo: this.route });
     }
 
 }
