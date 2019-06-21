@@ -7,10 +7,6 @@ import {Router} from '@angular/router';
 @Injectable()
 export class AuthService implements OnInit {
 
-    private url = 'https://ionic-app-mobilno-racunarstvo.firebaseio.com/users.json';
-
-    private token: string;
-
     constructor(private router: Router, private httpClient: HttpClient, private utilService: UtilService) {
     }
 
@@ -35,7 +31,6 @@ export class AuthService implements OnInit {
                     firebase.auth().currentUser.getIdToken()
                         .then(
                             (token) => {
-                                this.token = token;
                                 this.router.navigate(['/home']);
                                 this.utilService.showToast('Sign in successful!', 'success');
                             },
@@ -48,13 +43,8 @@ export class AuthService implements OnInit {
             .catch((error) => this.utilService.showToast(error, 'danger'));
     }
 
-    getToken() {
-        firebase.auth().currentUser.getIdToken().then((token) => this.token = token);
-        return this.token;
-    }
-
     isUserSignedIn() {
-        return this.token != null;
+        return !!firebase.auth().currentUser;
     }
 
     signOut() {
@@ -64,7 +54,6 @@ export class AuthService implements OnInit {
                 (error) => this.utilService.showToast(error, 'danger')
             )
             .catch((error) => this.utilService.showToast(error, 'danger'));
-        this.token = null;
         this.router.navigate(['/home']);
     }
 

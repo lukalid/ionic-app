@@ -24,6 +24,10 @@ firebase.initializeApp({
   appId: '1:754349644267:web:341205df4c99e1d0'
 });
 
+firebase.firestore().settings({
+  timestampsInSnapshots: true
+});
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

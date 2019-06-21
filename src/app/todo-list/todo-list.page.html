@@ -1,11 +1,20 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>todo-list</ion-title>
+  <ion-toolbar [style.color]="avatarColor">
+    <ion-title>TO DO LIST</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <button (click)="asd()">ASD</button>
+  CONTENT
 </ion-content>
 
-
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="onBack()" expand="block" fill="none" size="big" type="submit">
+      <span [style.color]="avatarColor" class="btn-login-register">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        Back
+      </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
