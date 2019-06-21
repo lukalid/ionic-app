@@ -29,8 +29,6 @@ export class SignupPage implements OnInit {
 
         return this.formBuilder.group(
             {
-                firstName: [null, Validators.compose([Validators.required])],
-                lastName: [null, Validators.compose([Validators.required])],
                 email: [null, Validators.compose([CustomValidators.patternValidator(emailRegex, {email: true}), Validators.required])],
                 password: [null, Validators.compose([
                     Validators.required,

@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import * as firebase from 'firebase';
 import { AuthService } from './auth/auth.service';
 import { UtilService } from './util/util.service';
+import { HttpClientModule } from '@angular/common/http';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyCdQzJ6tsF6TngzOhbHQdjBNCJ0uMdcXPg',
@@ -26,7 +27,7 @@ firebase.initializeApp({
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
     AuthService,
     UtilService,

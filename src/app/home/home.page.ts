@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Util } from '../util/util';
 import { Router } from '@angular/router';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ export class HomePage implements OnInit {
   avatarUrl: string;
   avatarColor: string;
 
-  constructor(private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.getNewAvatar();
@@ -23,12 +24,20 @@ export class HomePage implements OnInit {
     this.avatarUrl = Util.generateAvatarUrl(this.avatarColor.substring(1));
   }
 
-  onLogin() {
+  onSignIn() {
     this.router.navigate(['/signin/' + this.avatarColor]);
   }
 
-  onRegister() {
+  onSignUp() {
     this.router.navigate(['/signup/' + this.avatarColor]);
+  }
+
+  isUserSignedIn() {
+    return this.authService.isUserSignedIn();
+  }
+
+  onSignOut() {
+    this.authService.signOut();
   }
 
 }

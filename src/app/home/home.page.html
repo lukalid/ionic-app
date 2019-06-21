@@ -3,12 +3,22 @@
         <ion-title>
             <h1 style="font-weight: bold;">
                 TO DO APP
-                <ion-button fill="none" size="big" (click)="onLogin()">
-                    <span [style.color]="avatarColor" class="btn-login-register">Login</span>
-                </ion-button>
-                <ion-button fill="none" size="big" (click)="onRegister()">
-                    <span [style.color]="avatarColor" class="btn-login-register">Register</span>
-                </ion-button>
+                <ng-template [ngIf]="isUserSignedIn()">
+                    <ion-button fill="none" size="big" routerLink="/todo-list">
+                        <span [style.color]="avatarColor" class="btn-login-register">TO DO, TO DO...</span>
+                    </ion-button>
+                    <ion-button fill="none" size="big" (click)="onSignOut()">
+                        <span [style.color]="avatarColor" class="btn-login-register">Sign Out</span>
+                    </ion-button>
+                </ng-template>
+                <ng-template [ngIf]="!isUserSignedIn()">
+                    <ion-button fill="none" size="big" (click)="onSignIn()">
+                        <span [style.color]="avatarColor" class="btn-login-register">Sign In</span>
+                    </ion-button>
+                    <ion-button fill="none" size="big" (click)="onSignUp()">
+                        <span [style.color]="avatarColor" class="btn-login-register">Sign Up</span>
+                    </ion-button>
+                </ng-template>
             </h1>
         </ion-title>
     </ion-toolbar>
