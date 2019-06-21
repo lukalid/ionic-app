@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar [style.color]="avatarColor">
+    <ion-title>Sign In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="formSignIn" (ngSubmit)="onSignIn()">
+
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input id="email" formControlName="email" margin-top="5" type="email"
+                   placeholder="Enter email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input id="password" formControlName="password" margin-top="5" type="password"
+                   placeholder="Enter password"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" fill="none" size="big" type="submit">
+      <span [style.color]="avatarColor" class="btn-login-register">
+        <ion-icon slot="start" name="log-in"></ion-icon>
+        Sign In</span>
+    </ion-button>
+
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="onBack()" expand="block" fill="none" size="big" type="submit">
+      <span [style.color]="avatarColor" class="btn-login-register">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        Back
+      </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

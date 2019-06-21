@@ -1,27 +1,61 @@
 import * as firebase from 'firebase';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
 import { UtilService } from '../util/util.service';
-import { UserModel } from './user.model';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnInit {
 
-    private url = 'https://ionic-app-mobilno-racunarstvo.firebaseio.com/users.json';
+    private user: {uid: string, firstName: string, lastName: string, email: string, password: string } = {
+      uid: null, firstName: null, lastName: null, email: null, password: null
+    };
 
-    constructor(private http: HttpClient, private utilService: UtilService) { }
+    constructor(private utilService: UtilService) { }
 
-    signUp(firstName: string, lastName: string, email: string, password: string) {
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(
-            (response) => {
-                const user = new UserModel(response.user.uid, firstName, lastName, email, password);
-                this.http.post(this.url, user).subscribe(
-                    () => this.utilService.showToast('Account has been created.', 'success'),
-                    (error) => this.utilService.showToast(error, 'danger')
-                );
-            },
-            (error) => this.utilService.showToast(error, 'danger')
-        );
+    ngOnInit(): void { }
+
+    signUp(firstName: string, lastName: string, email: string, password: string): void {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(
+                (response) => {
+                    const user = {firstName, lastName, email, password};
+                    firebase.firestore().collection('users').doc(response.user.uid).set(user)
+                        .then(
+                            () => {
+                                this.user.uid = response.user.uid;
+                                this.user.firstName = user.firstName;
+                                this.user.lastName = user.lastName;
+                                this.user.email = user.email;
+                                this.user.password = user.password;
+                                this.utilService.showToast('Account has been created.', 'success');
+                            },
+                            (error) => this.utilService.showToast(error, 'danger')
+                        )
+                        .catch((error) => this.utilService.showToast(error, 'danger'));
+                },
+                (error) => this.utilService.showToast(error, 'danger')
+            )
+            .catch((error) => this.utilService.showToast(error, 'danger'));
+    }
+
+    signIn(email: string, password: string): void {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(
+                () => this.user.uid = firebase.auth().currentUser.uid,
+                (error) => this.utilService.showToast(error, 'danger')
+            )
+            .catch((error) => this.utilService.showToast(error, 'danger'));
+    }
+
+    isUserSignedIn() {
+        return firebase.auth().currentUser !== null;
+    }
+
+    signOut() {
+        firebase.auth().signOut();
+    }
+
+    getUser() {
+        return this.user;
     }
 
 }

@@ -1,41 +1,40 @@
 <ion-header>
-    <ion-toolbar [style.color]="getHeaderFooterColor()">
+    <ion-toolbar [style.color]="avatarColor">
         <ion-title>
-            <h1 style="font-weight: bold;">TO DO APP</h1>
+            <h1 style="font-weight: bold;">
+                TO DO APP
+                <ion-button fill="none" size="big" (click)="onLogin()">
+                    <span [style.color]="avatarColor" class="btn-login-register">Login</span>
+                </ion-button>
+                <ion-button fill="none" size="big" (click)="onRegister()">
+                    <span [style.color]="avatarColor" class="btn-login-register">Register</span>
+                </ion-button>
+            </h1>
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-    
     <ion-card>
-
         <ion-card-content>
             <img [src]="avatarUrl" alt="avatar">
         </ion-card-content>
-
         <ion-card-header>
             <ion-card-title>
                 <h2>Welcome to the best TO DO APP!</h2>
             </ion-card-title>
             <ion-card-subtitle>
-                <h3>So much to do, so little time...
-                    Better start today, err, now!</h3>
+                <h3>So much to do, so little time...</h3>
+                <h3>
+                    Better start today, err, <span [style.color]="avatarColor" (click)="getNewAvatar()" class="btn-login-register">NOW!</span>
+                </h3>
             </ion-card-subtitle>
         </ion-card-header>
     </ion-card>
-
-    <ion-button fill="none" size="big">
-        <span [style.color]="getHeaderFooterColor()" style="font-weight: bold;">Login</span>
-    </ion-button>
-    <ion-button fill="none" size="big">
-        <span [style.color]="getHeaderFooterColor()" style="font-weight: bold;">Register</span>
-    </ion-button>
-
 </ion-content>
 
 <ion-footer>
-    <ion-toolbar [style.color]="getHeaderFooterColor()">
+    <ion-toolbar [style.color]="avatarColor">
         <ion-title>
             <h4 style="font-weight: bold;">&copy; Copyright 2019 Biggy.com</h4>
         </ion-title>

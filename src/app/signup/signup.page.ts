@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from './custom-validators';
 import { AuthService } from '../auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-signup',
@@ -12,11 +13,14 @@ export class SignupPage implements OnInit {
 
     private formSignup: FormGroup;
     passwordMinLength = 8;
+    avatarColor: string;
 
-    constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
+    constructor(private formBuilder: FormBuilder, private authService: AuthService,
+                private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.formSignup = this.createSignupForm();
+        this.avatarColor = this.route.snapshot.paramMap.get('avatarColor');
     }
 
     private createSignupForm(): FormGroup {
@@ -62,6 +66,10 @@ export class SignupPage implements OnInit {
             const password = this.formSignup.value.password;
             this.authService.signUp(firstName, lastName, email, password);
         }
+    }
+
+    onBack() {
+        this.router.navigate(['../../'], { relativeTo: this.route });
     }
 
 }

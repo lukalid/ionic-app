@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Util} from '../util/util';
+import { Component, OnInit } from '@angular/core';
+import { Util } from '../util/util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,17 +10,25 @@ import {Util} from '../util/util';
 export class HomePage implements OnInit {
 
   avatarUrl: string;
-  headerFooterColor: string;
+  avatarColor: string;
 
-  constructor() {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.headerFooterColor = Util.generateRandomColor();
-    this.avatarUrl = Util.generateAvatarUrl(this.headerFooterColor);
+    this.getNewAvatar();
   }
 
-    getHeaderFooterColor() {
-      return '#' + this.headerFooterColor;
-    }
+  private getNewAvatar() {
+    this.avatarColor = Util.generateRandomColor();
+    this.avatarUrl = Util.generateAvatarUrl(this.avatarColor.substring(1));
+  }
+
+  onLogin() {
+    this.router.navigate(['/signin/' + this.avatarColor]);
+  }
+
+  onRegister() {
+    this.router.navigate(['/signup/' + this.avatarColor]);
+  }
 
 }

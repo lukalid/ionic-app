@@ -15,7 +15,7 @@ export class Util {
     }
 
     static generateRandomColor() {
-        return Math.random().toString(16).substr(-6);
+        return '#' + Math.random().toString(16).substr(-6);
     }
 
 }
