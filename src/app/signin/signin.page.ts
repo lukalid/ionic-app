@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Util } from '../util/util';
 import { Router } from '@angular/router';
+import { UtilService } from '../util/util.service';
 
 @Component({
     selector: 'app-signin',
@@ -15,7 +16,7 @@ export class SigninPage implements OnInit {
     private avatarColor: string;
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService,
-                private router: Router) { }
+                private router: Router, private utilService: UtilService) { }
 
     ngOnInit() {
         this.formSignIn = this.createSigninForm();
@@ -31,7 +32,15 @@ export class SigninPage implements OnInit {
 
     onSignIn() {
         if (this.formSignIn.valid) {
-            this.authService.signIn(this.formSignIn.value.email, this.formSignIn.value.password);
+            AuthService.signIn(this.formSignIn.value.email, this.formSignIn.value.password)
+                .then(
+                    () => {
+                        this.utilService.showToast('Sign in successful!', 'success');
+                        this.onBack();
+                    },
+                    (error) => this.utilService.showToast(error, 'danger')
+                )
+                .catch((error) => this.utilService.showToast(error, 'danger'));
         }
     }
 

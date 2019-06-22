@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Util} from '../util/util';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TodoService} from '../todo-list/todo.service';
-import {UtilService} from '../util/util.service';
-import {AuthService} from '../auth/auth.service';
-import {Router} from '@angular/router';
+import { Util } from '../util/util';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TodoService } from '../todo-list/todo.service';
+import { UtilService } from '../util/util.service';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-todo',
@@ -16,7 +16,7 @@ export class AddTodoPage implements OnInit {
   form: FormGroup;
   avatarColor: string;
 
-  constructor(private todoService: TodoService, private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private utilService: UtilService, private router: Router,
               private authService: AuthService) { }
 
@@ -35,12 +35,19 @@ export class AddTodoPage implements OnInit {
 
   onAdd() {
     if (this.form.valid) {
-      this.todoService.addTodo({
+      TodoService.addTodo({
           title: this.form.value.title,
           description: this.form.value.description,
           date: this.form.value.date,
           status: 'Incomplete'
-      });
+      }).then(
+        () => {
+              this.utilService.showToast('TO DO has been added!', 'success');
+              this.onBack();
+            },
+          (error) => this.utilService.showToast(error, 'danger')
+          )
+          .catch((error) => this.utilService.showToast(error, 'danger'));
     } else {
         this.utilService.showToast('Please, populate all fields!', 'danger');
     }
@@ -55,7 +62,15 @@ export class AddTodoPage implements OnInit {
   }
 
   onSignOut() {
-    this.authService.signOut();
+      AuthService.signOut()
+          .then(
+              () => {
+                  this.utilService.showToast('Sign out successful!', 'success');
+                  this.onBack();
+              },
+              (error) => this.utilService.showToast(error, 'danger')
+          )
+          .catch((error) => this.utilService.showToast(error, 'danger'));
   }
 
 }

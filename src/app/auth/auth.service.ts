@@ -1,13 +1,10 @@
 import * as firebase from 'firebase';
-import {Injectable, OnInit} from '@angular/core';
-import {UtilService} from '../util/util.service';
-import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
+import { Injectable, OnInit } from '@angular/core';
 
 @Injectable()
 export class AuthService implements OnInit {
 
-    constructor(private httpClient: HttpClient, private utilService: UtilService, private router: Router) { }
+    constructor() { }
 
     static isUserSignedIn() {
         return !!firebase.auth().currentUser;
@@ -17,53 +14,18 @@ export class AuthService implements OnInit {
         return firebase.auth().currentUser.uid;
     }
 
-    ngOnInit(): void {
+    static signUp(email: string, password: string) {
+        return firebase.auth().createUserWithEmailAndPassword(email, password);
     }
 
-    signUp(email: string, password: string): void {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(() => {
-                    this.utilService.showToast('Sign up successful!', 'success');
-                    this.goToHomePage();
-                },
-                (error) => this.utilService.showToast(error, 'danger')
-            )
-            .catch((error) => this.utilService.showToast(error, 'danger'));
+    static signIn(email: string, password: string) {
+        return firebase.auth().signInWithEmailAndPassword(email, password);
     }
 
-    signIn(email: string, password: string): void {
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(
-                () => {
-                    firebase.auth().currentUser.getIdToken()
-                        .then(
-                            (token) => {
-                                this.utilService.showToast('Sign in successful!', 'success');
-                                this.goToHomePage();
-                            },
-                            (error) => this.utilService.showToast(error, 'danger')
-                        )
-                        .catch((error) => this.utilService.showToast(error, 'danger'));
-                },
-                (error) => this.utilService.showToast(error, 'danger')
-            )
-            .catch((error) => this.utilService.showToast(error, 'danger'));
+    static signOut() {
+        return firebase.auth().signOut();
     }
 
-    signOut() {
-        firebase.auth().signOut()
-            .then(
-                () => {
-                    this.utilService.showToast('Sign out successful!', 'success');
-                    this.goToHomePage();
-                },
-                (error) => this.utilService.showToast(error, 'danger')
-            )
-            .catch((error) => this.utilService.showToast(error, 'danger'));
-    }
-
-    private goToHomePage() {
-        this.router.navigate(['/home']);
-    }
+    ngOnInit(): void { }
 
 }

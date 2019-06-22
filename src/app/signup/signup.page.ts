@@ -4,6 +4,7 @@ import { CustomValidators } from './custom-validators';
 import { AuthService } from '../auth/auth.service';
 import { Util } from '../util/util';
 import { Router } from '@angular/router';
+import {UtilService} from '../util/util.service';
 
 @Component({
     selector: 'app-signup',
@@ -17,7 +18,7 @@ export class SignupPage implements OnInit {
     private avatarColor: string;
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService,
-                private router: Router) { }
+                private router: Router, private utilService: UtilService) { }
 
     ngOnInit() {
         this.formSignup = this.createSignupForm();
@@ -59,7 +60,14 @@ export class SignupPage implements OnInit {
         if (this.formSignup.valid) {
             const email = this.formSignup.value.email;
             const password = this.formSignup.value.password;
-            this.authService.signUp(email, password);
+            AuthService.signUp(email, password)
+                .then(() => {
+                        this.utilService.showToast('Sign up successful!', 'success');
+                        this.onBack();
+                    },
+                    (error) => this.utilService.showToast(error, 'danger')
+                )
+                .catch((error) => this.utilService.showToast(error, 'danger'));;
         }
     }
 

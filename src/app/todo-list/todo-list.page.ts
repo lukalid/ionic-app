@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Util} from '../util/util';
-import {TodoService} from './todo.service';
-import {AuthService} from '../auth/auth.service';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Util } from '../util/util';
+import { TodoService } from './todo.service';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+import { UtilService } from '../util/util.service';
 
 @Component({
     selector: 'app-todo-list',
@@ -15,7 +16,7 @@ export class TodoListPage implements OnInit {
     todoList: any[];
 
     constructor(private router: Router, private authService: AuthService,
-                private todoService: TodoService) {
+                private todoService: TodoService, private utilService: UtilService) {
     }
 
     ngOnInit() {
@@ -25,7 +26,10 @@ export class TodoListPage implements OnInit {
 
     getTodoList() {
         TodoService.queryForTodoList()
-            .onSnapshot((querySnapshot) => this.todoList = querySnapshot.docs);
+            .onSnapshot(
+                (querySnapshot) => this.todoList = querySnapshot.docs,
+                (error) => this.utilService.showToast(error.message, 'danger')
+            );
     }
 
     onBack() {
@@ -33,16 +37,32 @@ export class TodoListPage implements OnInit {
     }
 
     onDelete(index: number) {
-        this.todoService.deleteTodo(this.todoList, index);
+        TodoService.deleteTodo(this.todoList[index])
+            .then(
+                () => {
+                    this.utilService.showToast('TO DO has been deleted!', 'success');
+                    this.todoList.splice(index, 1);
+                },
+                (error) => this.utilService.showToast(error, 'danger')
+            )
+            .catch((error) => this.utilService.showToast(error, 'danger'));;
     }
 
-    onEdit(todo: {}) {
+    onEdit(index: number) {
         console.log('On edit');
     }
 
     onChangeStatus(index: number) {
         const status = this.todoList[index].data().status === 'Complete' ? 'Incomplete' : 'Complete';
-        this.todoService.editTodo(this.todoList, index, {status});
+        TodoService.editTodo(this.todoList[index], {status})
+            .then(
+                () => {
+                    this.utilService.showToast('TO DO has been updated!', 'success');
+                    this.todoList[index].data().status = status;
+                },
+                (error) => this.utilService.showToast(error, 'danger')
+            )
+            .catch((error) => this.utilService.showToast(error, 'danger'));
     }
 
     isUserSignedIn() {
@@ -50,7 +70,15 @@ export class TodoListPage implements OnInit {
     }
 
     onSignOut() {
-        this.authService.signOut();
+        AuthService.signOut()
+            .then(
+                () => {
+                    this.utilService.showToast('Sign out successful!', 'success');
+                    this.onBack();
+                },
+                (error) => this.utilService.showToast(error, 'danger')
+            )
+            .catch((error) => this.utilService.showToast(error, 'danger'));
     }
 
 }

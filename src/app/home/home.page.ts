@@ -3,6 +3,7 @@ import { Util } from '../util/util';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { UtilService } from '../util/util.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomePage implements OnInit {
   avatarUrl: string;
   avatarColor: string;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private utilService: UtilService) { }
 
   ngOnInit(): void {
     this.getNewAvatar();
@@ -37,8 +38,14 @@ export class HomePage implements OnInit {
   }
 
   onSignOut() {
-    this.authService.signOut();
-    this.router.navigate(['/home']);
+    AuthService.signOut()
+        .then(
+            () => {
+              this.utilService.showToast('Sign out successful!', 'success');
+            },
+            (error) => this.utilService.showToast(error, 'danger')
+        )
+        .catch((error) => this.utilService.showToast(error, 'danger'));
   }
 
 }
