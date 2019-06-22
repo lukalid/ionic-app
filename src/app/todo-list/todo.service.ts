@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {AuthService} from '../auth/auth.service';
+import { Injectable } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { UtilService } from '../util/util.service';
 import * as firebase from 'firebase';
-import {UtilService} from '../util/util.service';
-import {NavController} from '@ionic/angular';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class TodoService {
 
-    constructor(private authService: AuthService, private utilService: UtilService, private navController: NavController) { }
+    constructor(private authService: AuthService, private utilService: UtilService, private router: Router) { }
 
     addTodo(todo: {title: string, description: string, date: Date, userUid?: string}) {
         if (this.authService.isUserSignedIn()) {
@@ -15,8 +15,8 @@ export class TodoService {
             firebase.firestore().collection('todo-list').add(todo)
                 .then(
                     () => {
-                        this.navController.back();
                         this.utilService.showToast('TO DO has been added!', 'success');
+                        this.router.navigate(['/todo-list']);
                     },
                     (error) => this.utilService.showToast(error, 'danger')
                 )

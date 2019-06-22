@@ -1,6 +1,23 @@
 <ion-header>
   <ion-toolbar [style.color]="avatarColor">
-    <ion-title>TO DO LIST</ion-title>
+    <ion-title>
+      <h1 style="font-weight: bold;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              TO DO LIST
+            </ion-col>
+            <ng-template [ngIf]="isUserSignedIn()">
+              <ion-col>
+                <ion-button fill="none" size="big" (click)="onSignOut()">
+                  <span [style.color]="avatarColor" class="btn-login-register">Sign Out</span>
+                </ion-button>
+              </ion-col>
+            </ng-template>
+          </ion-row>
+        </ion-grid>
+      </h1>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -24,13 +41,13 @@
       </ion-item>
 
       <ion-item-options side="start">
-        <ion-item-option color="danger" (click)="onDelete(i)">
+        <ion-item-option color="danger" (click)="onDelete(todo)">
           <ion-icon name="trash"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="primary" (click)="onEdit(i)">
+        <ion-item-option color="primary" (click)="onEdit(todo)">
           <ion-icon name="create"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="secondary" (click)="onCheck(i)">
+        <ion-item-option color="secondary" (click)="onCheck(todo)">
           <ion-icon name="checkmark"></ion-icon>
         </ion-item-option>
       </ion-item-options>

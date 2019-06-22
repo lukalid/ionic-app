@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Util } from '../util/util';
-import {NavController} from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-signin',
@@ -11,10 +11,11 @@ import {NavController} from '@ionic/angular';
 })
 export class SigninPage implements OnInit {
 
-    formSignIn: FormGroup;
-    avatarColor: string;
+    private formSignIn: FormGroup;
+    private avatarColor: string;
 
-    constructor(private formBuilder: FormBuilder, private authService: AuthService, private navController: NavController) { }
+    constructor(private formBuilder: FormBuilder, private authService: AuthService,
+                private router: Router) { }
 
     ngOnInit() {
         this.formSignIn = this.createSigninForm();
@@ -35,7 +36,8 @@ export class SigninPage implements OnInit {
     }
 
     onBack() {
-        this.navController.navigateBack('/home');
+        this.formSignIn.reset();
+        this.router.navigate(['/home']);
     }
 
 }

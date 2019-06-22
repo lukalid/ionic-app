@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Util } from '../util/util';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 import * as firebase from 'firebase';
-import {Router} from '@angular/router';
-import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -15,15 +14,15 @@ export class HomePage implements OnInit {
   avatarUrl: string;
   avatarColor: string;
 
-  constructor(private navController: NavController, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getNewAvatar();
     firebase.auth().onAuthStateChanged(() => {
       if (this.authService.isUserSignedIn()) {
-        this.navController.navigateForward('/todo-list');
+        this.router.navigate(['/todo-list']);
       } else {
-        this.navController.navigateForward('/home');
+        this.router.navigate(['/home']);
       }
     });
   }
@@ -39,6 +38,7 @@ export class HomePage implements OnInit {
 
   onSignOut() {
     this.authService.signOut();
+    this.router.navigate(['/home']);
   }
 
 }

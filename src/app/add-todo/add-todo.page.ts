@@ -3,7 +3,8 @@ import {Util} from '../util/util';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TodoService} from '../todo-list/todo.service';
 import {UtilService} from '../util/util.service';
-import {NavController} from '@ionic/angular';
+import {AuthService} from '../auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-todo',
@@ -16,15 +17,12 @@ export class AddTodoPage implements OnInit {
   avatarColor: string;
 
   constructor(private todoService: TodoService, private formBuilder: FormBuilder,
-              private utilService: UtilService, private navController: NavController) { }
+              private utilService: UtilService, private router: Router,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.avatarColor = Util.getAvatarColor();
     this.form = this.createForm();
-  }
-
-  onBack() {
-      this.navController.back();
   }
 
   private createForm(): FormGroup {
@@ -45,6 +43,18 @@ export class AddTodoPage implements OnInit {
     } else {
         this.utilService.showToast('Please, populate all fields!', 'danger');
     }
+  }
+
+  onBack() {
+    this.router.navigate(['/todo-list']);
+  }
+
+  isUserSignedIn() {
+    return this.authService.isUserSignedIn();
+  }
+
+  onSignOut() {
+    this.authService.signOut();
   }
 
 }

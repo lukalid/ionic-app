@@ -7,17 +7,17 @@ import {Router} from '@angular/router';
 @Injectable()
 export class AuthService implements OnInit {
 
-    constructor(private router: Router, private httpClient: HttpClient, private utilService: UtilService) {
+    constructor(private httpClient: HttpClient, private utilService: UtilService, private router: Router) {
     }
 
     ngOnInit(): void {
     }
 
-    signUp(firstName: string, lastName: string, email: string, password: string): void {
+    signUp(email: string, password: string): void {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(() => {
-                    this.router.navigate(['/home']);
                     this.utilService.showToast('Sign up successful!', 'success');
+                    this.goToHomePage();
                 },
                 (error) => this.utilService.showToast(error, 'danger')
             )
@@ -31,8 +31,8 @@ export class AuthService implements OnInit {
                     firebase.auth().currentUser.getIdToken()
                         .then(
                             (token) => {
-                                this.router.navigate(['/home']);
                                 this.utilService.showToast('Sign in successful!', 'success');
+                                this.goToHomePage();
                             },
                             (error) => this.utilService.showToast(error, 'danger')
                         )
@@ -50,15 +50,21 @@ export class AuthService implements OnInit {
     signOut() {
         firebase.auth().signOut()
             .then(
-                () => this.utilService.showToast('Sign out successful!', 'success'),
+                () => {
+                    this.utilService.showToast('Sign out successful!', 'success');
+                    this.goToHomePage();
+                },
                 (error) => this.utilService.showToast(error, 'danger')
             )
             .catch((error) => this.utilService.showToast(error, 'danger'));
-        this.router.navigate(['/home']);
     }
 
     getCurrentUserUid(): string {
         return firebase.auth().currentUser.uid;
+    }
+
+    private goToHomePage() {
+        this.router.navigate(['/home']);
     }
 
 }

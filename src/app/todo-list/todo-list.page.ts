@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Util} from '../util/util';
-import {NavController} from '@ionic/angular';
-import {TodoService} from './todo.service';
+import { Util } from '../util/util';
+import { TodoService } from './todo.service';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo-list',
@@ -13,7 +14,8 @@ export class TodoListPage implements OnInit {
   avatarColor: string;
   todoList: any[];
 
-  constructor(private todoService: TodoService, private navController: NavController) { }
+  constructor(private router: Router, private authService: AuthService,
+              private todoService: TodoService) { }
 
   ngOnInit() {
     this.avatarColor = Util.getAvatarColor();
@@ -24,19 +26,27 @@ export class TodoListPage implements OnInit {
   }
 
   onBack() {
-    this.navController.back();
+    this.router.navigate(['/home']);
   }
 
-  onDelete(index: number) {
+  onDelete(todo: {}) {
     console.log('On delete');
   }
 
-  onEdit(index: number) {
+  onEdit(todo: {}) {
     console.log('On edit');
   }
 
-  onCheck(index: number) {
+  onCheck(todo: {}) {
     console.log('On check');
+  }
+
+  isUserSignedIn() {
+    return this.authService.isUserSignedIn();
+  }
+
+  onSignOut() {
+    this.authService.signOut();
   }
 
 }

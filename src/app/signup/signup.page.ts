@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from './custom-validators';
 import { AuthService } from '../auth/auth.service';
 import { Util } from '../util/util';
-import {NavController} from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-signup',
@@ -13,10 +13,11 @@ import {NavController} from '@ionic/angular';
 export class SignupPage implements OnInit {
 
     private formSignup: FormGroup;
-    passwordMinLength = 8;
-    avatarColor: string;
+    private passwordMinLength = 8;
+    private avatarColor: string;
 
-    constructor(private formBuilder: FormBuilder, private authService: AuthService, private navController: NavController) { }
+    constructor(private formBuilder: FormBuilder, private authService: AuthService,
+                private router: Router) { }
 
     ngOnInit() {
         this.formSignup = this.createSignupForm();
@@ -24,9 +25,7 @@ export class SignupPage implements OnInit {
     }
 
     private createSignupForm(): FormGroup {
-
         const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-
         return this.formBuilder.group(
             {
                 email: [null, Validators.compose([CustomValidators.patternValidator(emailRegex, {email: true}), Validators.required])],
@@ -58,16 +57,15 @@ export class SignupPage implements OnInit {
 
     onSignUp() {
         if (this.formSignup.valid) {
-            const firstName = this.formSignup.value.firstName;
-            const lastName = this.formSignup.value.lastName;
             const email = this.formSignup.value.email;
             const password = this.formSignup.value.password;
-            this.authService.signUp(firstName, lastName, email, password);
+            this.authService.signUp(email, password);
         }
     }
 
     onBack() {
-        this.navController.navigateBack('/home');
+        this.formSignup.reset();
+        this.router.navigate(['/home']);
     }
 
     passwordIsTouched() {
