@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     this.getNewAvatar();
     firebase.auth().onAuthStateChanged(() => {
-      if (this.authService.isUserSignedIn()) {
+      if (AuthService.isUserSignedIn()) {
         this.router.navigate(['/todo-list']);
       } else {
         this.router.navigate(['/home']);
@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   }
 
   isUserSignedIn() {
-    return this.authService.isUserSignedIn();
+    return AuthService.isUserSignedIn();
   }
 
   onSignOut() {

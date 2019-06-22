@@ -38,7 +38,8 @@ export class AddTodoPage implements OnInit {
       this.todoService.addTodo({
           title: this.form.value.title,
           description: this.form.value.description,
-          date: this.form.value.date
+          date: this.form.value.date,
+          status: 'Incomplete'
       });
     } else {
         this.utilService.showToast('Please, populate all fields!', 'danger');
@@ -50,7 +51,7 @@ export class AddTodoPage implements OnInit {
   }
 
   isUserSignedIn() {
-    return this.authService.isUserSignedIn();
+    return AuthService.isUserSignedIn();
   }
 
   onSignOut() {

@@ -1,52 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { Util } from '../util/util';
-import { TodoService } from './todo.service';
-import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Util} from '../util/util';
+import {TodoService} from './todo.service';
+import {AuthService} from '../auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './todo-list.page.html',
-  styleUrls: ['./todo-list.page.scss'],
+    selector: 'app-todo-list',
+    templateUrl: './todo-list.page.html',
+    styleUrls: ['./todo-list.page.scss'],
 })
 export class TodoListPage implements OnInit {
 
-  avatarColor: string;
-  todoList: any[];
+    avatarColor: string;
+    todoList: any[];
 
-  constructor(private router: Router, private authService: AuthService,
-              private todoService: TodoService) { }
-
-  ngOnInit() {
-    this.avatarColor = Util.getAvatarColor();
-    const query = this.todoService.queryForTodoList();
-    if (query != null) {
-      query.onSnapshot((querySnapshot) => this.todoList = querySnapshot.docs);
+    constructor(private router: Router, private authService: AuthService,
+                private todoService: TodoService) {
     }
-  }
 
-  onBack() {
-    this.router.navigate(['/home']);
-  }
+    ngOnInit() {
+        this.avatarColor = Util.getAvatarColor();
+        this.getTodoList();
+    }
 
-  onDelete(todo: {}) {
-    console.log('On delete');
-  }
+    getTodoList() {
+        TodoService.queryForTodoList()
+            .onSnapshot((querySnapshot) => this.todoList = querySnapshot.docs);
+    }
 
-  onEdit(todo: {}) {
-    console.log('On edit');
-  }
+    onBack() {
+        this.router.navigate(['/home']);
+    }
 
-  onCheck(todo: {}) {
-    console.log('On check');
-  }
+    onDelete(index: number) {
+        this.todoService.deleteTodo(this.todoList, index);
+    }
 
-  isUserSignedIn() {
-    return this.authService.isUserSignedIn();
-  }
+    onEdit(todo: {}) {
+        console.log('On edit');
+    }
 
-  onSignOut() {
-    this.authService.signOut();
-  }
+    onChangeStatus(index: number) {
+        const status = this.todoList[index].data().status === 'Complete' ? 'Incomplete' : 'Complete';
+        this.todoService.editTodo(this.todoList, index, {status});
+    }
+
+    isUserSignedIn() {
+        return AuthService.isUserSignedIn();
+    }
+
+    onSignOut() {
+        this.authService.signOut();
+    }
 
 }

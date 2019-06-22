@@ -7,7 +7,14 @@ import {Router} from '@angular/router';
 @Injectable()
 export class AuthService implements OnInit {
 
-    constructor(private httpClient: HttpClient, private utilService: UtilService, private router: Router) {
+    constructor(private httpClient: HttpClient, private utilService: UtilService, private router: Router) { }
+
+    static isUserSignedIn() {
+        return !!firebase.auth().currentUser;
+    }
+
+    static getCurrentUserUid(): string {
+        return firebase.auth().currentUser.uid;
     }
 
     ngOnInit(): void {
@@ -43,10 +50,6 @@ export class AuthService implements OnInit {
             .catch((error) => this.utilService.showToast(error, 'danger'));
     }
 
-    isUserSignedIn() {
-        return !!firebase.auth().currentUser;
-    }
-
     signOut() {
         firebase.auth().signOut()
             .then(
@@ -57,10 +60,6 @@ export class AuthService implements OnInit {
                 (error) => this.utilService.showToast(error, 'danger')
             )
             .catch((error) => this.utilService.showToast(error, 'danger'));
-    }
-
-    getCurrentUserUid(): string {
-        return firebase.auth().currentUser.uid;
     }
 
     private goToHomePage() {
