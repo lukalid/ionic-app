@@ -37,11 +37,10 @@ export class TodoListPage implements OnInit {
     }
 
     onDelete(index: number) {
-        TodoService.deleteTodo(this.todoList[index])
+        TodoService.deleteTodo(this.todoList[index].id)
             .then(
                 () => {
                     this.utilService.showToast('TO DO has been deleted!', 'success');
-                    this.todoList.splice(index, 1);
                 },
                 (error) => this.utilService.showToast(error, 'danger')
             )
@@ -49,12 +48,17 @@ export class TodoListPage implements OnInit {
     }
 
     onEdit(index: number) {
-        console.log('On edit');
+        const document = this.todoList[index];
+        const id = document.id;
+        const title = document.data().title;
+        const description = document.data().description;
+        const date = document.data().date;
+        this.router.navigate([`/edit-todo/${id}/${title}/${description}/${date}`]);
     }
 
     onChangeStatus(index: number) {
         const status = this.todoList[index].data().status === 'Complete' ? 'Incomplete' : 'Complete';
-        TodoService.editTodo(this.todoList[index], {status})
+        TodoService.editTodo(this.todoList[index].id, {status})
             .then(
                 () => {
                     this.utilService.showToast('TO DO has been updated!', 'success');

@@ -18,12 +18,12 @@ export class TodoService {
         return firebase.firestore().collection('todo-list').add(todo);
     }
 
-    static editTodo(document: firebase.firestore.QueryDocumentSnapshot, data) {
-        return firebase.firestore().collection('todo-list').doc(document.id).update(data);
+    static editTodo(id: string, data) {
+        return firebase.firestore().collection('todo-list').doc(id).update(data);
     }
 
-    static deleteTodo(document: firebase.firestore.QueryDocumentSnapshot) {
-        return firebase.firestore().collection('todo-list').doc(document.id).delete();
+    static deleteTodo(id: string) {
+        return firebase.firestore().collection('todo-list').doc(id).delete();
     }
 
 }

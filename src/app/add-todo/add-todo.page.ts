@@ -17,8 +17,7 @@ export class AddTodoPage implements OnInit {
   avatarColor: string;
 
   constructor(private formBuilder: FormBuilder,
-              private utilService: UtilService, private router: Router,
-              private authService: AuthService) { }
+              private utilService: UtilService, private router: Router) { }
 
   ngOnInit() {
     this.avatarColor = Util.getAvatarColor();

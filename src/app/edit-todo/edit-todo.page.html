@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar [style.color]="avatarColor">
+    <ion-title>
+      <h1 style="font-weight: bold;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              Edit TO DO
+            </ion-col>
+            <ng-template [ngIf]="isUserSignedIn()">
+              <ion-col>
+                <ion-button fill="none" size="big" (click)="onSignOut()">
+                  <span [style.color]="avatarColor" class="btn-login-register">Sign Out</span>
+                </ion-button>
+              </ion-col>
+            </ng-template>
+          </ion-row>
+        </ion-grid>
+      </h1>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="form" (ngSubmit)="onEdit()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">TO DO Title</ion-label>
+        <ion-input formControlName="title" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">TO DO Description</ion-label>
+        <ion-input formControlName="description" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">TO DO Date</ion-label>
+        <ion-datetime formControlName="date" min="2019" max="2021" displayFormat="DD/MM/YYYY"></ion-datetime>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" fill="none" size="big" type="submit">
+      <span [style.color]="avatarColor" class="btn-login-register">
+        <ion-icon slot="start" name="log-in"></ion-icon>
+        Edit
+      </span>
+    </ion-button>
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="onBack()" expand="block" fill="none" size="big">
+      <span [style.color]="avatarColor" class="btn-login-register">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        Back
+      </span>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

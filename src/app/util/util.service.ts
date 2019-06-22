@@ -9,7 +9,7 @@ export class UtilService {
     async showToast(message: string, color: string) {
         const toast = await this.toastControler.create({
             message,
-            duration: 5000,
+            duration: 3000,
             color,
             showCloseButton: true,
             closeButtonText: 'X',

@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'signin', loadChildren: './signin/signin.module#SigninPageModule' },
   { path: 'todo-list', loadChildren: './todo-list/todo-list.module#TodoListPageModule' },
   { path: 'add-todo', loadChildren: './add-todo/add-todo.module#AddTodoPageModule' },
+  { path: 'edit-todo/:id/:title/:description/:date', loadChildren: './edit-todo/edit-todo.module#EditTodoPageModule' }
 ];
 
 @NgModule({
