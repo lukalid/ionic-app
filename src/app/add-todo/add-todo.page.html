@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar [style.color]="avatarColor">
+  <ion-toolbar appAvatarColor>
     <ion-title>
       <h1 style="font-weight: bold;">
         <ion-grid>
@@ -10,7 +10,7 @@
             <ng-template [ngIf]="isUserSignedIn()">
               <ion-col>
                 <ion-button fill="none" size="big" (click)="onSignOut()">
-                  <span [style.color]="avatarColor" class="btn-login-register">Sign Out</span>
+                  <span class="btn-login-register">Sign Out</span>
                 </ion-button>
               </ion-col>
             </ng-template>
@@ -43,7 +43,7 @@
       </ion-item>
     </ion-list>
     <ion-button expand="block" fill="none" size="big" type="submit">
-      <span [style.color]="avatarColor" class="btn-login-register">
+      <span appAvatarColor class="btn-login-register">
         <ion-icon slot="start" name="log-in"></ion-icon>
         Add
       </span>
@@ -55,7 +55,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-button (click)="onBack()" expand="block" fill="none" size="big">
-      <span [style.color]="avatarColor" class="btn-login-register">
+      <span appAvatarColor class="btn-login-register">
         <ion-icon slot="start" name="arrow-back"></ion-icon>
         Back
       </span>

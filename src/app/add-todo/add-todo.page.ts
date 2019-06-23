@@ -14,13 +14,11 @@ import { Router } from '@angular/router';
 export class AddTodoPage implements OnInit {
 
   form: FormGroup;
-  avatarColor: string;
 
   constructor(private formBuilder: FormBuilder,
               private utilService: UtilService, private router: Router) { }
 
   ngOnInit() {
-    this.avatarColor = Util.getAvatarColor();
     this.form = this.createForm();
   }
 

@@ -1,33 +1,30 @@
 <ion-header>
-    <ion-toolbar [style.color]="avatarColor">
+    <ion-toolbar appAvatarColor>
         <ion-title>
             <h1 style="font-weight: bold;">
                 <ion-grid>
                     <ion-row>
-                        <ion-col size="6">
-                            TO DO APP
-                        </ion-col>
                         <ng-template [ngIf]="isUserSignedIn()">
                             <ion-col>
                                 <ion-button fill="none" size="big" routerLink="/todo-list">
-                                    <span [style.color]="avatarColor" class="btn-login-register">TO DO, TO DO...</span>
+                                    <span class="btn-login-register">TO DO, TO DO...</span>
                                 </ion-button>
                             </ion-col>
                             <ion-col>
                                 <ion-button fill="none" size="big" (click)="onSignOut()">
-                                    <span [style.color]="avatarColor" class="btn-login-register">Sign Out</span>
+                                    <span class="btn-login-register">Sign Out</span>
                                 </ion-button>
                             </ion-col>
                         </ng-template>
                         <ng-template [ngIf]="!isUserSignedIn()">
                             <ion-col>
                                 <ion-button fill="none" size="big" routerLink="/signin">
-                                    <span [style.color]="avatarColor" class="btn-login-register">Sign In</span>
+                                    <span class="btn-login-register">Sign In</span>
                                 </ion-button>
                             </ion-col>
                             <ion-col>
                                 <ion-button fill="none" size="big" routerLink="/signup">
-                                    <span [style.color]="avatarColor" class="btn-login-register">Sign Up</span>
+                                    <span class="btn-login-register">Sign Up</span>
                                 </ion-button>
                             </ion-col>
                         </ng-template>
@@ -45,12 +42,12 @@
         </ion-card-content>
         <ion-card-header>
             <ion-card-title>
-                <h2>Welcome to the best TO DO APP!</h2>
+                <h2 style="font-weight: bold" appAvatarColor>TO DO APP</h2>
             </ion-card-title>
             <ion-card-subtitle>
                 <h3>So much to do, so little time...</h3>
                 <h3>
-                    Better start today, err, <span [style.color]="avatarColor" (click)="getNewAvatar()" class="btn-login-register">NOW!</span>
+                    Better start today, err, <span appAvatarColor (click)="getNewAvatar()" class="btn-login-register">NOW!</span>
                 </h3>
             </ion-card-subtitle>
         </ion-card-header>
@@ -58,7 +55,7 @@
 </ion-content>
 
 <ion-footer>
-    <ion-toolbar [style.color]="avatarColor">
+    <ion-toolbar appAvatarColor>
         <ion-title>
             <h4 style="font-weight: bold;">&copy; Copyright 2019 Biggy.com</h4>
         </ion-title>

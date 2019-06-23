@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Util } from '../util/util';
 import { TodoService } from './todo.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -13,7 +12,6 @@ import { AlertController } from '@ionic/angular';
 })
 export class TodoListPage implements OnInit {
 
-    avatarColor: string;
     todoList: any[];
 
     constructor(private router: Router, private authService: AuthService,
@@ -22,7 +20,6 @@ export class TodoListPage implements OnInit {
     }
 
     ngOnInit() {
-        this.avatarColor = Util.getAvatarColor();
         this.getTodoList();
     }
 

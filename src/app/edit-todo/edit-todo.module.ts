@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { EditTodoPage } from './edit-todo.page';
 import { IonicRatingModule } from 'ionic4-rating/dist';
+import {SharedModule} from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    SharedModule,
     IonicRatingModule,
     CommonModule,
     FormsModule,

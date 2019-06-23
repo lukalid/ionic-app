@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar [style.color]="avatarColor">
+  <ion-toolbar appAvatarColor>
     <ion-title>
       <h1 style="font-weight: bold;">
         Sign In
@@ -26,7 +26,7 @@
     </ion-list>
 
     <ion-button expand="block" fill="none" size="big" type="submit">
-      <span [style.color]="avatarColor" class="btn-login-register">
+      <span appAvatarColor class="btn-login-register">
         <ion-icon slot="start" name="log-in"></ion-icon>
         Sign In
       </span>
@@ -39,7 +39,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-button (click)="onBack()" expand="block" fill="none" size="big">
-      <span [style.color]="avatarColor" class="btn-login-register">
+      <span appAvatarColor class="btn-login-register">
         <ion-icon slot="start" name="arrow-back"></ion-icon>
         Back
       </span>

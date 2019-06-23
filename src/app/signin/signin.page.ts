@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
-import { Util } from '../util/util';
 import { Router } from '@angular/router';
 import { UtilService } from '../util/util.service';
 
@@ -13,14 +12,12 @@ import { UtilService } from '../util/util.service';
 export class SigninPage implements OnInit {
 
     private formSignIn: FormGroup;
-    private avatarColor: string;
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService,
                 private router: Router, private utilService: UtilService) { }
 
     ngOnInit() {
         this.formSignIn = this.createSigninForm();
-        this.avatarColor = Util.getAvatarColor();
     }
 
     private createSigninForm(): FormGroup {

@@ -13,7 +13,6 @@ import { UtilService } from '../util/util.service';
 export class HomePage implements OnInit {
 
   avatarUrl: string;
-  avatarColor: string;
 
   constructor(private router: Router, private utilService: UtilService) { }
 
@@ -30,7 +29,6 @@ export class HomePage implements OnInit {
 
   private getNewAvatar() {
     this.avatarUrl = Util.generateAvatarUrl();
-    this.avatarColor = Util.getAvatarColor();
   }
 
   isUserSignedIn() {

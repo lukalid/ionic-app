@@ -28,7 +28,12 @@ firebase.initializeApp({
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule
+  ],
   providers: [
     TodoService,
     AuthService,

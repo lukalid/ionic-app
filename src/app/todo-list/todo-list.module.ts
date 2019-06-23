@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { TodoListPage } from './todo-list.page';
 import { IonicRatingModule } from 'ionic4-rating/dist';
 import { ShortenPipe } from '../pipes/shorten.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    SharedModule,
     IonicRatingModule,
     CommonModule,
     FormsModule,
