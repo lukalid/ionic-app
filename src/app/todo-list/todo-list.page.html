@@ -4,7 +4,7 @@
       <h1 style="font-weight: bold;">
         <ion-grid>
           <ion-row>
-            <ion-col size="6">
+            <ion-col size="8">
               TO DO LIST
             </ion-col>
             <ng-template [ngIf]="isUserSignedIn()">
@@ -38,7 +38,7 @@
             <ion-row>
               <ion-col size="10">
                 <h2>{{ todo.data().title }}</h2>
-                <h3>{{ todo.data().description }}</h3>
+                <h3>{{ todo.data().description | shorten:15 }}</h3>
                 <p>{{ todo.data().date | date:'mediumDate' }}</p>
                 {{ todo.data().difficulty }}
                 <ion-icon name="star" color="warning"></ion-icon>

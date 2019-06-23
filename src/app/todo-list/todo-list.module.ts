@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { TodoListPage } from './todo-list.page';
 import { IonicRatingModule } from 'ionic4-rating/dist';
+import { ShortenPipe } from '../pipes/shorten.pipe';
 
 const routes: Routes = [
   {
@@ -23,6 +24,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [TodoListPage]
+  declarations: [ShortenPipe, TodoListPage]
 })
 export class TodoListPageModule {}
