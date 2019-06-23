@@ -28,7 +28,8 @@ export class AddTodoPage implements OnInit {
     return this.formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.required])],
-      date: [null, Validators.compose([Validators.required])]
+      date: [null, Validators.compose([Validators.required])],
+      difficulty: [null, Validators.compose([Validators.required])]
     });
   }
 
@@ -38,7 +39,8 @@ export class AddTodoPage implements OnInit {
           title: this.form.value.title,
           description: this.form.value.description,
           date: this.form.value.date,
-          status: 'Incomplete'
+          status: 'Incomplete',
+          difficulty: this.form.value.difficulty
       }).then(
         () => {
               this.utilService.showToast('TO DO has been added!', 'success');

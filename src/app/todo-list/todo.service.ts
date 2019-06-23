@@ -13,7 +13,7 @@ export class TodoService {
             .where('userUid', '==', userUid);
     }
 
-    static addTodo(todo: { title: string, description: string, date: Date, status: string, userUid?: string }) {
+    static addTodo(todo: { title: string, description: string, date: Date, status: string, difficulty: number, userUid?: string }) {
         todo.userUid = AuthService.getCurrentUserUid();
         return firebase.firestore().collection('todo-list').add(todo);
     }

@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { EditTodoPage } from './edit-todo.page';
+import { IonicRatingModule } from 'ionic4-rating/dist';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    IonicRatingModule,
     CommonModule,
     FormsModule,
     IonicModule,

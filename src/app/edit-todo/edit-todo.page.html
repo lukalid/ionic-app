@@ -37,6 +37,10 @@
         <ion-label position="stacked">TO DO Date</ion-label>
         <ion-datetime formControlName="date" min="2019" max="2021" displayFormat="DD/MM/YYYY"></ion-datetime>
       </ion-item>
+      <ion-item>
+        <ion-label position="stacked">TO DO Difficulty</ion-label>
+        <rating formControlName="difficulty"></rating>
+      </ion-item>
     </ion-list>
     <ion-button expand="block" fill="none" size="big" type="submit">
       <span [style.color]="avatarColor" class="btn-login-register">

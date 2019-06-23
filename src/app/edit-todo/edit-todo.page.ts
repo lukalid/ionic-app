@@ -29,7 +29,8 @@ export class EditTodoPage implements OnInit {
     return this.formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.required])],
-      date: [null, Validators.compose([Validators.required])]
+      date: [null, Validators.compose([Validators.required])],
+      difficulty: [null, Validators.compose([Validators.required])]
     });
   }
 
@@ -37,7 +38,8 @@ export class EditTodoPage implements OnInit {
     const title = this.route.snapshot.paramMap.get('title');
     const description = this.route.snapshot.paramMap.get('description');
     const date = this.route.snapshot.paramMap.get('date');
-    this.form.setValue({ title, description, date });
+    const difficulty = this.route.snapshot.paramMap.get('difficulty');
+    this.form.setValue({ title, description, date, difficulty });
   }
 
   onEdit() {
@@ -45,7 +47,8 @@ export class EditTodoPage implements OnInit {
       const title = this.form.value.title;
       const description = this.form.value.description;
       const date = this.form.value.date;
-      TodoService.editTodo(this.route.snapshot.paramMap.get('id'), {title, description, date})
+      const difficulty = this.form.value.difficulty;
+      TodoService.editTodo(this.route.snapshot.paramMap.get('id'), {title, description, date, difficulty})
           .then(
           () => {
             this.utilService.showToast('TO DO has been updated!', 'success');

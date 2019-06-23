@@ -53,7 +53,8 @@ export class TodoListPage implements OnInit {
         const title = document.data().title;
         const description = document.data().description;
         const date = document.data().date;
-        this.router.navigate([`/edit-todo/${id}/${title}/${description}/${date}`]);
+        const difficulty = document.data().difficulty;
+        this.router.navigate([`/edit-todo/${id}/${title}/${description}/${date}/${difficulty}`]);
     }
 
     onChangeStatus(index: number) {
