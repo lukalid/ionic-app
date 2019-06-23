@@ -9,6 +9,7 @@ import { TodoListPage } from './todo-list.page';
 import { IonicRatingModule } from 'ionic4-rating/dist';
 import { ShortenPipe } from '../pipes/shorten.pipe';
 import { SharedModule } from '../shared/shared.module';
+import { FilterPipe } from '../pipes/filter.pipe';
 
 const routes: Routes = [
   {
@@ -26,6 +27,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ShortenPipe, TodoListPage]
+  declarations: [FilterPipe, ShortenPipe, TodoListPage]
 })
 export class TodoListPageModule {}

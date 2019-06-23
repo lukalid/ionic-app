@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TodoService } from './todo.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -13,13 +13,15 @@ import { AlertController } from '@ionic/angular';
 export class TodoListPage implements OnInit {
 
     todoList: any[];
+    filterStatus = 'All';
 
     constructor(private router: Router, private authService: AuthService,
                 private todoService: TodoService, private utilService: UtilService,
-                private alertController: AlertController) {
+                private alertController: AlertController, private changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {
+        this.todoList = [];
         this.getTodoList();
     }
 
@@ -41,6 +43,31 @@ export class TodoListPage implements OnInit {
 
     onBack() {
         this.router.navigate(['/home']);
+    }
+
+    onFilter() {
+        this.alertController.create({
+            header: 'Filter options:',
+            buttons: [{
+                text: 'All',
+                handler: () => {
+                    this.filterStatus = 'All';
+                    this.changeDetectorRef.detectChanges();
+                }
+            }, {
+                text: 'Complete',
+                handler: () => {
+                    this.filterStatus = 'Complete';
+                    this.changeDetectorRef.detectChanges();
+                }
+            }, {
+                text: 'Incomplete',
+                handler: () => {
+                    this.filterStatus = 'Incomplete';
+                    this.changeDetectorRef.detectChanges();
+                }
+            }]
+        }).then((alert) => alert.present());
     }
 
     async onDelete(index: number) {

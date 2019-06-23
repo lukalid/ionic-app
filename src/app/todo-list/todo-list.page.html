@@ -23,15 +23,29 @@
 
 <ion-content padding>
 
-  <ion-button routerLink="/add-todo" expand="block" fill="none" size="big" type="submit">
-      <span appAvatarColor class="btn-login-register">
-        <ion-icon slot="start" name="add"></ion-icon>
-        Add
-      </span>
-  </ion-button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button routerLink="/add-todo" expand="block" fill="none" size="big">
+        <span appAvatarColor class="btn-login-register">
+          <ion-icon slot="start" name="add"></ion-icon>
+          Add
+        </span>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="onFilter()" expand="block" fill="none" size="big">
+        <span appAvatarColor class="btn-login-register">
+          <ion-icon slot="start" name="cut"></ion-icon>
+          Filter
+        </span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let todo of todoList; let i = index">
+    <ion-item-sliding *ngFor="let todo of todoList | filter:filterStatus; let i = index">
       <ion-item>
         <ion-label>
           <ion-grid>

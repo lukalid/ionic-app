@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Util } from '../util/util';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -14,16 +14,13 @@ export class HomePage implements OnInit {
 
   avatarUrl: string;
 
-  constructor(private router: Router, private utilService: UtilService) { }
+  constructor(private changeDetectorRef: ChangeDetectorRef, private router: Router,
+              private utilService: UtilService) { }
 
   ngOnInit(): void {
     this.getNewAvatar();
     firebase.auth().onAuthStateChanged(() => {
-      if (AuthService.isUserSignedIn()) {
-        this.router.navigate(['/todo-list']);
-      } else {
-        this.router.navigate(['/home']);
-      }
+        this.changeDetectorRef.detectChanges();
     });
   }
 
