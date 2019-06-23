@@ -30,17 +30,26 @@ export class SigninPage implements OnInit {
         });
     }
 
-    onSignIn() {
+    async onSignIn() {
         if (this.formSignIn.valid) {
+            const loading = await this.utilService.createLoading();
+            loading.present();
             AuthService.signIn(this.formSignIn.value.email, this.formSignIn.value.password)
                 .then(
                     () => {
+                        loading.dismiss();
                         this.utilService.showToast('Sign in successful!', 'success');
                         this.onBack();
                     },
-                    (error) => this.utilService.showToast(error, 'danger')
+                    (error) => {
+                        loading.dismiss();
+                        this.utilService.showToast(error, 'danger');
+                    }
                 )
-                .catch((error) => this.utilService.showToast(error, 'danger'));
+                .catch((error) => {
+                    loading.dismiss();
+                    this.utilService.showToast(error, 'danger');
+                });
         }
     }
 

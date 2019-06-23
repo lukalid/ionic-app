@@ -56,18 +56,27 @@ export class SignupPage implements OnInit {
             !this.doesPasswordHaveError('hasSmallCase');
     }
 
-    onSignUp() {
+    async onSignUp() {
         if (this.formSignup.valid) {
             const email = this.formSignup.value.email;
             const password = this.formSignup.value.password;
+            const loading = await this.utilService.createLoading();
+            loading.present();
             AuthService.signUp(email, password)
                 .then(() => {
+                        loading.dismiss();
                         this.utilService.showToast('Sign up successful!', 'success');
                         this.onBack();
                     },
-                    (error) => this.utilService.showToast(error, 'danger')
+                    (error) => {
+                        loading.dismiss();
+                        this.utilService.showToast(error, 'danger');
+                    }
                 )
-                .catch((error) => this.utilService.showToast(error, 'danger'));;
+                .catch((error) => {
+                    loading.dismiss();
+                    this.utilService.showToast(error, 'danger');
+                });
         }
     }
 

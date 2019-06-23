@@ -33,8 +33,10 @@ export class AddTodoPage implements OnInit {
     });
   }
 
-  onAdd() {
+  async onAdd() {
     if (this.form.valid) {
+      const loading = await this.utilService.createLoading();
+      loading.present();
       TodoService.addTodo({
           title: this.form.value.title,
           description: this.form.value.description,
@@ -43,12 +45,19 @@ export class AddTodoPage implements OnInit {
           difficulty: this.form.value.difficulty
       }).then(
         () => {
+              loading.dismiss();
               this.utilService.showToast('TO DO has been added!', 'success');
               this.onBack();
             },
-          (error) => this.utilService.showToast(error, 'danger')
+          (error) => {
+              loading.dismiss();
+              this.utilService.showToast(error, 'danger');
+            }
           )
-          .catch((error) => this.utilService.showToast(error, 'danger'));
+          .catch((error) => {
+              loading.dismiss();
+              this.utilService.showToast(error, 'danger');
+          });
     } else {
         this.utilService.showToast('Please, populate all fields!', 'danger');
     }

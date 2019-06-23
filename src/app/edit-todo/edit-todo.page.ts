@@ -42,21 +42,30 @@ export class EditTodoPage implements OnInit {
     this.form.setValue({ title, description, date, difficulty });
   }
 
-  onEdit() {
+  async onEdit() {
     if (this.form.valid) {
       const title = this.form.value.title;
       const description = this.form.value.description;
       const date = this.form.value.date;
       const difficulty = this.form.value.difficulty;
+      const loading = await this.utilService.createLoading();
+      loading.present();
       TodoService.editTodo(this.route.snapshot.paramMap.get('id'), {title, description, date, difficulty})
           .then(
           () => {
+            loading.dismiss();
             this.utilService.showToast('TO DO has been updated!', 'success');
             this.onBack();
           },
-          (error) => this.utilService.showToast(error, 'danger')
+          (error) => {
+            loading.dismiss();
+            this.utilService.showToast(error, 'danger');
+          }
       )
-          .catch((error) => this.utilService.showToast(error, 'danger'));;
+          .catch((error) => {
+            loading.dismiss();
+            this.utilService.showToast(error, 'danger');
+          });;
     } else {
       this.utilService.showToast('Please, populate all fields!', 'danger');
     }

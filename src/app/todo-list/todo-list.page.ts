@@ -24,11 +24,19 @@ export class TodoListPage implements OnInit {
         this.getTodoList();
     }
 
-    getTodoList() {
+    async getTodoList() {
+        const loading = await this.utilService.createLoading();
+        loading.present();
         TodoService.queryForTodoList()
             .onSnapshot(
-                (querySnapshot) => this.todoList = querySnapshot.docs,
-                (error) => this.utilService.showToast(error.message, 'danger')
+                (querySnapshot) => {
+                    loading.dismiss();
+                    this.todoList = querySnapshot.docs;
+                },
+                (error) => {
+                    loading.dismiss();
+                    this.utilService.showToast(error.message, 'danger');
+                }
             );
     }
 
@@ -36,15 +44,24 @@ export class TodoListPage implements OnInit {
         this.router.navigate(['/home']);
     }
 
-    onDelete(index: number) {
+    async onDelete(index: number) {
+        const loading = await this.utilService.createLoading();
+        loading.present();
         TodoService.deleteTodo(this.todoList[index].id)
             .then(
                 () => {
+                    loading.dismiss();
                     this.utilService.showToast('TO DO has been deleted!', 'success');
                 },
-                (error) => this.utilService.showToast(error, 'danger')
+                (error) => {
+                    loading.dismiss();
+                    this.utilService.showToast(error, 'danger');
+                }
             )
-            .catch((error) => this.utilService.showToast(error, 'danger'));;
+            .catch((error) => {
+                loading.dismiss();
+                this.utilService.showToast(error, 'danger');
+            });;
     }
 
     onEdit(index: number) {
@@ -57,33 +74,50 @@ export class TodoListPage implements OnInit {
         this.router.navigate([`/edit-todo/${id}/${title}/${description}/${date}/${difficulty}`]);
     }
 
-    onChangeStatus(index: number) {
+    async onChangeStatus(index: number) {
         const status = this.todoList[index].data().status === 'Complete' ? 'Incomplete' : 'Complete';
+        const loading = await this.utilService.createLoading();
+        loading.present();
         TodoService.editTodo(this.todoList[index].id, {status})
             .then(
                 () => {
+                    loading.dismiss();
                     this.utilService.showToast('TO DO has been updated!', 'success');
-                    this.todoList[index].data().status = status;
                 },
-                (error) => this.utilService.showToast(error, 'danger')
+                (error) => {
+                    loading.dismiss();
+                    this.utilService.showToast(error, 'danger');
+                }
             )
-            .catch((error) => this.utilService.showToast(error, 'danger'));
+            .catch((error) => {
+                loading.dismiss();
+                this.utilService.showToast(error, 'danger');
+            });
     }
 
     isUserSignedIn() {
         return AuthService.isUserSignedIn();
     }
 
-    onSignOut() {
+    async onSignOut() {
+        const loading = await this.utilService.createLoading();
+        loading.present();
         AuthService.signOut()
             .then(
                 () => {
+                    loading.dismiss();
                     this.utilService.showToast('Sign out successful!', 'success');
                     this.onBack();
                 },
-                (error) => this.utilService.showToast(error, 'danger')
+                (error) => {
+                    loading.dismiss();
+                    this.utilService.showToast(error, 'danger');
+                }
             )
-            .catch((error) => this.utilService.showToast(error, 'danger'));
+            .catch((error) => {
+                loading.dismiss();
+                this.utilService.showToast(error, 'danger');
+            });
     }
 
 }
