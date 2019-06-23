@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { TodoService } from './todo.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ export class TodoListPage implements OnInit {
 
     todoList: any[];
     filterStatus = 'All';
+    sortFunction = (todo1, todo2): boolean => false;
 
     constructor(private router: Router, private authService: AuthService,
                 private todoService: TodoService, private utilService: UtilService,
@@ -64,6 +65,43 @@ export class TodoListPage implements OnInit {
                 text: 'Incomplete',
                 handler: () => {
                     this.filterStatus = 'Incomplete';
+                    this.changeDetectorRef.detectChanges();
+                }
+            }]
+        }).then((alert) => alert.present());
+    }
+
+    onSort() {
+        this.alertController.create({
+            header: 'Sort by:',
+            buttons: [{
+                text: 'Difficulty ascending',
+                handler: () => {
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data().difficulty > todo2.data().difficulty;
+                    this.changeDetectorRef.detectChanges();
+                }
+            }, {
+                text: 'Difficulty descending',
+                handler: () => {
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data().difficulty < todo2.data().difficulty;
+                    this.changeDetectorRef.detectChanges();
+                }
+            }, {
+                text: 'Date ascending',
+                handler: () => {
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data().date > todo2.data().date;
+                    this.changeDetectorRef.detectChanges();
+                }
+            }, {
+                text: 'Date descending',
+                handler: () => {
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data().date < todo2.data().date;
+                    this.changeDetectorRef.detectChanges();
+                }
+            }, {
+                text: 'None',
+                handler: () => {
+                    this.sortFunction = (todo1, todo2): boolean => false;
                     this.changeDetectorRef.detectChanges();
                 }
             }]

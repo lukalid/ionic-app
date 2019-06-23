@@ -41,11 +41,19 @@
         </span>
         </ion-button>
       </ion-col>
+      <ion-col>
+        <ion-button (click)="onSort()" expand="block" fill="none" size="big">
+        <span appAvatarColor class="btn-login-register">
+          <ion-icon slot="start" name="swap"></ion-icon>
+          Sort
+        </span>
+        </ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let todo of todoList | filter:filterStatus; let i = index">
+    <ion-item-sliding *ngFor="let todo of todoList | filter:filterStatus | sort:sortFunction; let i = index">
       <ion-item>
         <ion-label>
           <ion-grid>

@@ -10,6 +10,7 @@ import { IonicRatingModule } from 'ionic4-rating/dist';
 import { ShortenPipe } from '../pipes/shorten.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { SortPipe } from '../pipes/sort.pipe';
 
 const routes: Routes = [
   {
@@ -27,6 +28,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [FilterPipe, ShortenPipe, TodoListPage]
+  declarations: [SortPipe, FilterPipe, ShortenPipe, TodoListPage]
 })
 export class TodoListPageModule {}
