@@ -4,6 +4,7 @@ import { TodoService } from './todo.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { UtilService } from '../util/util.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
     selector: 'app-todo-list',
@@ -16,7 +17,8 @@ export class TodoListPage implements OnInit {
     todoList: any[];
 
     constructor(private router: Router, private authService: AuthService,
-                private todoService: TodoService, private utilService: UtilService) {
+                private todoService: TodoService, private utilService: UtilService,
+                private alertController: AlertController) {
     }
 
     ngOnInit() {
@@ -45,6 +47,22 @@ export class TodoListPage implements OnInit {
     }
 
     async onDelete(index: number) {
+        const alert = await this.alertController.create({
+            header: 'Are you sure?',
+            buttons: [{
+                text: 'Yes',
+                handler: () => {
+                    this.deleteTodo(index);
+                }
+            }, {
+                text: 'No',
+                handler: () => { }
+            }]
+        });
+        alert.present();
+    }
+
+    private async deleteTodo(index: number) {
         const loading = await this.utilService.createLoading();
         loading.present();
         TodoService.deleteTodo(this.todoList[index].id)
@@ -61,7 +79,7 @@ export class TodoListPage implements OnInit {
             .catch((error) => {
                 loading.dismiss();
                 this.utilService.showToast(error, 'danger');
-            });;
+            });
     }
 
     onEdit(index: number) {
