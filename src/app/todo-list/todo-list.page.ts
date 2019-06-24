@@ -32,8 +32,21 @@ export class TodoListPage implements OnInit {
         TodoService.queryForTodoList()
             .onSnapshot(
                 (querySnapshot) => {
+                    this.todoList = [];
+                    for (const doc of querySnapshot.docs) {
+                        this.todoList.push({
+                            data: {
+                                id: doc.id,
+                                userUid: doc.data().userUid,
+                                title: doc.data().title,
+                                description: doc.data().description,
+                                date: doc.data().date,
+                                difficulty: doc.data().difficulty,
+                                status: doc.data().status
+                            }
+                        });
+                    }
                     loading.dismiss();
-                    this.todoList = querySnapshot.docs;
                 },
                 (error) => {
                     loading.dismiss();
@@ -77,25 +90,37 @@ export class TodoListPage implements OnInit {
             buttons: [{
                 text: 'Difficulty ascending',
                 handler: () => {
-                    this.sortFunction = (todo1, todo2): boolean => todo1.data().difficulty > todo2.data().difficulty;
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data.difficulty > todo2.data.difficulty;
                     this.changeDetectorRef.detectChanges();
                 }
             }, {
                 text: 'Difficulty descending',
                 handler: () => {
-                    this.sortFunction = (todo1, todo2): boolean => todo1.data().difficulty < todo2.data().difficulty;
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data.difficulty < todo2.data.difficulty;
                     this.changeDetectorRef.detectChanges();
                 }
             }, {
                 text: 'Date ascending',
                 handler: () => {
-                    this.sortFunction = (todo1, todo2): boolean => todo1.data().date > todo2.data().date;
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data.date > todo2.data.date;
                     this.changeDetectorRef.detectChanges();
                 }
             }, {
                 text: 'Date descending',
                 handler: () => {
-                    this.sortFunction = (todo1, todo2): boolean => todo1.data().date < todo2.data().date;
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data.date < todo2.data.date;
+                    this.changeDetectorRef.detectChanges();
+                }
+            }, {
+               text: 'Title ascending',
+               handler: () => {
+                   this.sortFunction = (todo1, todo2): boolean => todo1.data.title > todo2.data.title;
+                   this.changeDetectorRef.detectChanges();
+               }
+            }, {
+                text: 'Title descending',
+                handler: () => {
+                    this.sortFunction = (todo1, todo2): boolean => todo1.data.title < todo2.data.title;
                     this.changeDetectorRef.detectChanges();
                 }
             }, {
@@ -127,7 +152,7 @@ export class TodoListPage implements OnInit {
     private async deleteTodo(index: number) {
         const loading = await this.utilService.createLoading();
         loading.present();
-        TodoService.deleteTodo(this.todoList[index].id)
+        TodoService.deleteTodo(this.todoList[index].data.id)
             .then(
                 () => {
                     loading.dismiss();
@@ -145,20 +170,20 @@ export class TodoListPage implements OnInit {
     }
 
     onEdit(index: number) {
-        const document = this.todoList[index];
-        const id = document.id;
-        const title = document.data().title;
-        const description = document.data().description;
-        const date = document.data().date;
-        const difficulty = document.data().difficulty;
+        const todo = this.todoList[index];
+        const id = todo.data.id;
+        const title = todo.data.title;
+        const description = todo.data.description;
+        const date = todo.data.date;
+        const difficulty = todo.data.difficulty;
         this.router.navigate([`/edit-todo/${id}/${title}/${description}/${date}/${difficulty}`]);
     }
 
     async onChangeStatus(index: number) {
-        const status = this.todoList[index].data().status === 'Complete' ? 'Incomplete' : 'Complete';
+        const status = this.todoList[index].data.status === 'Complete' ? 'Incomplete' : 'Complete';
         const loading = await this.utilService.createLoading();
         loading.present();
-        TodoService.editTodo(this.todoList[index].id, {status})
+        TodoService.editTodo(this.todoList[index].data.id, {status})
             .then(
                 () => {
                     loading.dismiss();

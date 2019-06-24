@@ -10,9 +10,9 @@ export class SortPipe implements PipeTransform {
         for (let i = 0; i < sortedTodoList.length - 1; i++) {
             for (let j = i + 1; j < sortedTodoList.length; j++) {
                 if (sortFunction(sortedTodoList[i], sortedTodoList[j])) {
-                    const pom = sortedTodoList[i];
-                    sortedTodoList[i] = sortedTodoList[j];
-                    sortedTodoList[j] = pom;
+                    const tempData = sortedTodoList[i].data;
+                    sortedTodoList[i].data = sortedTodoList[j].data;
+                    sortedTodoList[j].data = tempData;
                 }
             }
         }

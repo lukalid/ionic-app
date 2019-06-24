@@ -59,17 +59,17 @@
           <ion-grid>
             <ion-row>
               <ion-col size="10">
-                <h2>{{ todo.data().title }}</h2>
-                <h3>{{ todo.data().description | shorten:15 }}</h3>
-                <p>{{ todo.data().date | date:'mediumDate' }}</p>
-                {{ todo.data().difficulty }}
+                <h2>{{ todo.data.title }}</h2>
+                <h3>{{ todo.data.description | shorten:15 }}</h3>
+                <p>{{ todo.data.date | date:'mediumDate' }}</p>
+                {{ todo.data.difficulty }}
                 <ion-icon name="star" color="warning"></ion-icon>
               </ion-col>
               <ion-col>
-                <ng-template [ngIf]="todo.data().status === 'Complete'">
+                <ng-template [ngIf]="todo.data.status === 'Complete'">
                   <ion-icon size="large" color="success" name="checkmark"></ion-icon>
                 </ng-template>
-                <ng-template [ngIf]="todo.data().status === 'Incomplete'">
+                <ng-template [ngIf]="todo.data.status === 'Incomplete'">
                   <ion-icon size="large" color="danger" name="close"></ion-icon>
                 </ng-template>
               </ion-col>
@@ -79,12 +79,12 @@
       </ion-item>
 
       <ion-item-options side="start">
-        <ng-template [ngIf]="todo.data().status === 'Complete'">
+        <ng-template [ngIf]="todo.data.status === 'Complete'">
           <ion-item-option color="danger" (click)="onChangeStatus(i)">
            <ion-icon name="close"></ion-icon>
           </ion-item-option>
         </ng-template>
-        <ng-template [ngIf]="todo.data().status === 'Incomplete'">
+        <ng-template [ngIf]="todo.data.status === 'Incomplete'">
           <ion-item-option color="success" (click)="onChangeStatus(i)">
             <ion-icon name="checkmark"></ion-icon>
           </ion-item-option>

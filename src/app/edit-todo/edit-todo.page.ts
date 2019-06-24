@@ -62,7 +62,7 @@ export class EditTodoPage implements OnInit {
           .catch((error) => {
             loading.dismiss();
             this.utilService.showToast(error, 'danger');
-          });;
+          });
     } else {
       this.utilService.showToast('Please, populate all fields!', 'danger');
     }
