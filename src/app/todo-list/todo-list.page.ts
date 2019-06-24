@@ -13,6 +13,7 @@ import {StatsService} from '../stats/stats.service';
 })
 export class TodoListPage implements OnInit {
 
+    originalTodoList: any[];
     searchBarValue = '';
     todoList: any[];
     filterStatus = 'All';
@@ -52,6 +53,10 @@ export class TodoListPage implements OnInit {
                                 status: doc.data().status
                             }
                         });
+                    }
+                    this.originalTodoList = [];
+                    for (const todo of this.todoList) {
+                        this.originalTodoList.push({data: todo.data});
                     }
                     loading.dismiss();
                 },
@@ -131,8 +136,12 @@ export class TodoListPage implements OnInit {
                     this.changeDetectorRef.detectChanges();
                 }
             }, {
-                text: 'None',
+                text: 'Reset',
                 handler: () => {
+                    this.todoList = [];
+                    for (const todo of this.originalTodoList) {
+                        this.todoList.push({data: todo.data});
+                    }
                     this.sortFunction = (todo1, todo2): boolean => false;
                     this.changeDetectorRef.detectChanges();
                 }
