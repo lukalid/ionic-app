@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { AvatarColorDirective } from '../directives/avatar-color.directive';
+import { SignoutDirective } from '../directives/signout.directive';
 
 @NgModule({
     declarations: [
-        AvatarColorDirective
+        AvatarColorDirective,
+        SignoutDirective
     ],
     exports: [
-        AvatarColorDirective
+        AvatarColorDirective,
+        SignoutDirective
     ]
 })
 export class SharedModule { }

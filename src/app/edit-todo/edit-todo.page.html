@@ -5,12 +5,12 @@
         <ion-grid>
           <ion-row>
             <ion-col size="8">
-              Edit TO DO
+              Edit To Do
             </ion-col>
             <ng-template [ngIf]="isUserSignedIn()">
               <ion-col>
-                <ion-button fill="none" size="big" (click)="onSignOut()">
-                  <span class="btn-login-register">Sign Out</span>
+                <ion-button fill="none" size="big" appSignout>
+                  Sign Out
                 </ion-button>
               </ion-col>
             </ng-template>

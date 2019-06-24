@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Util } from '../util/util';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { UtilService } from '../util/util.service';
 
@@ -12,14 +11,25 @@ import { UtilService } from '../util/util.service';
 })
 export class HomePage implements OnInit {
 
+  showHeader: boolean;
   avatarUrl: string;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private router: Router,
-              private utilService: UtilService) { }
+  constructor(private changeDetectorRef: ChangeDetectorRef, private utilService: UtilService) { }
 
   ngOnInit(): void {
     this.getNewAvatar();
-    firebase.auth().onAuthStateChanged(() => this.changeDetectorRef.detectChanges());
+    this.init();
+  }
+
+  private async init() {
+    this.showHeader = false;
+    const loading = await this.utilService.createLoading();
+    loading.present();
+    firebase.auth().onAuthStateChanged(() => {
+      this.showHeader = true;
+      this.changeDetectorRef.detectChanges();
+      loading.dismiss();
+    });
   }
 
   private getNewAvatar() {
@@ -28,17 +38,6 @@ export class HomePage implements OnInit {
 
   isUserSignedIn() {
     return AuthService.isUserSignedIn();
-  }
-
-  onSignOut() {
-    AuthService.signOut()
-        .then(
-            () => {
-              this.utilService.showToast('Sign out successful!', 'success');
-            },
-            (error) => this.utilService.showToast(error, 'danger')
-        )
-        .catch((error) => this.utilService.showToast(error, 'danger'));
   }
 
 }

@@ -4,7 +4,7 @@ import { TodoService } from '../todo-list/todo.service';
 import { UtilService } from '../util/util.service';
 import { AuthService } from '../auth/auth.service';
 import { Router} from '@angular/router';
-import {StatsService} from '../stats/stats.service';
+import { StatsService } from '../stats/stats.service';
 
 @Component({
   selector: 'app-add-todo',
@@ -69,18 +69,6 @@ export class AddTodoPage implements OnInit {
 
   isUserSignedIn() {
     return AuthService.isUserSignedIn();
-  }
-
-  onSignOut() {
-      AuthService.signOut()
-          .then(
-              () => {
-                  this.utilService.showToast('Sign out successful!', 'success');
-                  this.onBack();
-              },
-              (error) => this.utilService.showToast(error, 'danger')
-          )
-          .catch((error) => this.utilService.showToast(error, 'danger'));
   }
 
 }

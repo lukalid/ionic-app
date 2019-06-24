@@ -224,27 +224,6 @@ export class TodoListPage implements OnInit {
         return AuthService.isUserSignedIn();
     }
 
-    async onSignOut() {
-        const loading = await this.utilService.createLoading();
-        loading.present();
-        AuthService.signOut()
-            .then(
-                () => {
-                    loading.dismiss();
-                    this.utilService.showToast('Sign out successful!', 'success');
-                    this.onBack();
-                },
-                (error) => {
-                    loading.dismiss();
-                    this.utilService.showToast(error, 'danger');
-                }
-            )
-            .catch((error) => {
-                loading.dismiss();
-                this.utilService.showToast(error, 'danger');
-            });
-    }
-
     onAdd() {
         this.ngZone.run(() => this.router.navigateByUrl('/add-todo'));
     }
