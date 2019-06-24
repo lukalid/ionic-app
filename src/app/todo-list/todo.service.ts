@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import * as firebase from 'firebase';
 
-@Injectable()
 export class TodoService {
 
     constructor() { }
@@ -24,6 +22,10 @@ export class TodoService {
 
     static deleteTodo(id: string) {
         return firebase.firestore().collection('todo-list').doc(id).delete();
+    }
+
+    static getTodo(id: string) {
+        return firebase.firestore().collection('todo-list').doc(id).get();
     }
 
 }

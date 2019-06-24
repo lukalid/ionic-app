@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'todo-list', loadChildren: './todo-list/todo-list.module#TodoListPageModule', canActivate: [AuthGuard] },
   { path: 'add-todo', loadChildren: './add-todo/add-todo.module#AddTodoPageModule', canActivate: [AuthGuard] },
   { path: 'edit-todo/:id/:title/:description/:date/:difficulty', loadChildren: './edit-todo/edit-todo.module#EditTodoPageModule',
-    canActivate: [AuthGuard] }
+    canActivate: [AuthGuard] },
+  { path: 'stats', loadChildren: './stats/stats.module#StatsPageModule', canActivate: [AuthGuard] }
 ];
 
 @NgModule({

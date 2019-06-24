@@ -4,6 +4,7 @@ import { UtilService } from '../util/util.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { TodoService } from '../todo-list/todo.service';
+import {StatsService} from '../stats/stats.service';
 
 @Component({
   selector: 'app-edit-todo',
@@ -49,18 +50,32 @@ export class EditTodoPage implements OnInit {
       const difficulty = this.form.value.difficulty;
       const loading = await this.utilService.createLoading();
       loading.present();
-      TodoService.editTodo(this.route.snapshot.paramMap.get('id'), {title, description, date, difficulty})
-          .then(
-          () => {
-            loading.dismiss();
-            this.utilService.showToast('TO DO has been updated!', 'success');
-            this.onBack();
-          },
-          (error) => {
+      const id = this.route.snapshot.paramMap.get('id');
+      TodoService.getTodo(id)
+          .then((document) => {
+            const previousDifficulty = document.data().difficulty;
+            TodoService.editTodo(id, {title, description, date, difficulty})
+                .then(
+                    () => {
+                      const difficultyDifference = difficulty - previousDifficulty;
+                      StatsService.updateStats(date, difficultyDifference, 0, 0);
+                      loading.dismiss();
+                      this.utilService.showToast('TO DO has been updated!', 'success');
+                      this.onBack();
+                    },
+                    (error) => {
+                      loading.dismiss();
+                      this.utilService.showToast(error, 'danger');
+                    }
+                )
+                .catch((error) => {
+                  loading.dismiss();
+                  this.utilService.showToast(error, 'danger');
+                });
+          }, (error) => {
             loading.dismiss();
             this.utilService.showToast(error, 'danger');
-          }
-      )
+          })
           .catch((error) => {
             loading.dismiss();
             this.utilService.showToast(error, 'danger');

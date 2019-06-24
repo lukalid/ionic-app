@@ -15,6 +15,7 @@ import { UtilService } from './util/util.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TodoService } from './todo-list/todo.service';
 import { AuthGuard } from './shared/auth-guard.service';
+import { StatsService } from './stats/stats.service';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyCdQzJ6tsF6TngzOhbHQdjBNCJ0uMdcXPg',
@@ -36,6 +37,7 @@ firebase.initializeApp({
     AppRoutingModule
   ],
   providers: [
+    StatsService,
     AuthGuard,
     TodoService,
     AuthService,

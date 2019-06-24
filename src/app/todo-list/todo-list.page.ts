@@ -4,6 +4,7 @@ import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { UtilService } from '../util/util.service';
 import { AlertController } from '@ionic/angular';
+import {StatsService} from '../stats/stats.service';
 
 @Component({
     selector: 'app-todo-list',
@@ -186,12 +187,16 @@ export class TodoListPage implements OnInit {
     }
 
     async onChangeStatus(index: number) {
-        const status = this.todoList[index].data.status === 'Complete' ? 'Incomplete' : 'Complete';
+        const todo = this.todoList[index].data;
+        const status = todo.status === 'Complete' ? 'Incomplete' : 'Complete';
         const loading = await this.utilService.createLoading();
         loading.present();
         TodoService.editTodo(this.todoList[index].data.id, {status})
             .then(
                 () => {
+                    const numberOfComplete = status === 'Complete' ? 1 : -1;
+                    const numberOfIncomplete = status === 'Incomplete' ? 1 : -1;
+                    StatsService.updateStats(String(todo.date), 0, numberOfComplete, numberOfIncomplete);
                     loading.dismiss();
                     this.utilService.showToast('TO DO has been updated!', 'success');
                 },
@@ -233,6 +238,10 @@ export class TodoListPage implements OnInit {
 
     onAdd() {
         this.ngZone.run(() => this.router.navigateByUrl('/add-todo'));
+    }
+
+    onStats() {
+        this.ngZone.run(() => this.router.navigateByUrl('/stats'));
     }
 
 }
