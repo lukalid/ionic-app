@@ -16,7 +16,9 @@ export class StatsPage implements OnInit {
 
   constructor(private utilService: UtilService, private router: Router) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const loading = await this.utilService.createLoading();
+    loading.present();
     this.stats = [];
     StatsService.queryForStatsList()
         .onSnapshot((querySnapshot) => {
@@ -24,6 +26,10 @@ export class StatsPage implements OnInit {
             this.stats.push(this.getStat(doc));
           }
           this.sortByYear();
+          loading.dismiss();
+        }, (error) => {
+            loading.dismiss();
+            this.utilService.showToast(error.message, 'danger');
         });
   }
 
