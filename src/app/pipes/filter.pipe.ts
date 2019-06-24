@@ -9,13 +9,7 @@ export class FilterPipe implements PipeTransform {
         if (todoList.length === 0 || filterStatus === 'All') {
             return todoList;
         }
-        const filteredTodoList = [];
-        for (const todo of todoList) {
-            if (todo.data.status === filterStatus) {
-                filteredTodoList.push(todo);
-            }
-        }
-        return filteredTodoList;
+        return todoList.filter((todo) => todo.data.status === filterStatus);
     }
 
 }

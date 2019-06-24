@@ -12,6 +12,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class TodoListPage implements OnInit {
 
+    searchBarValue = '';
     todoList: any[];
     filterStatus = 'All';
     sortFunction = (todo1, todo2): boolean => false;
@@ -24,6 +25,10 @@ export class TodoListPage implements OnInit {
     ngOnInit() {
         this.todoList = [];
         this.getTodoList();
+    }
+
+    search(event) {
+        this.searchBarValue = event.srcElement.value;
     }
 
     async getTodoList() {

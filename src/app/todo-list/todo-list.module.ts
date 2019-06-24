@@ -11,6 +11,7 @@ import { ShortenPipe } from '../pipes/shorten.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { SortPipe } from '../pipes/sort.pipe';
+import { SearchPipe } from '../pipes/search.pipe';
 
 const routes: Routes = [
   {
@@ -28,6 +29,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SortPipe, FilterPipe, ShortenPipe, TodoListPage]
+  declarations: [SearchPipe, SortPipe, FilterPipe, ShortenPipe, TodoListPage]
 })
 export class TodoListPageModule {}

@@ -25,6 +25,9 @@
 
   <ion-grid>
     <ion-row>
+      <ion-searchbar (input)="search($event)"></ion-searchbar>
+    </ion-row>
+    <ion-row>
       <ion-col>
         <ion-button routerLink="/add-todo" expand="block" fill="none" size="big">
         <span appAvatarColor class="btn-login-register">
@@ -53,7 +56,7 @@
   </ion-grid>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let todo of todoList | filter:filterStatus | sort:sortFunction; let i = index">
+    <ion-item-sliding *ngFor="let todo of todoList | filter:filterStatus | sort:sortFunction | search:searchBarValue; let i = index">
       <ion-item>
         <ion-label>
           <ion-grid>
