@@ -92,7 +92,7 @@ export class TodoListPage implements OnInit {
 
     onSort() {
         this.alertController.create({
-            header: 'Sort by:',
+            header: 'Sort options:',
             buttons: [{
                 text: 'Difficulty ascending',
                 handler: () => {
