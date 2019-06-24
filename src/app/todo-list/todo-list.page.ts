@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, NgZone, OnInit, ViewChild} from '@angular/core';
 import { TodoService } from './todo.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { UtilService } from '../util/util.service';
-import { AlertController } from '@ionic/angular';
-import {StatsService} from '../stats/stats.service';
+import { AlertController, IonSelect } from '@ionic/angular';
+import { StatsService } from '../stats/stats.service';
 
 @Component({
     selector: 'app-todo-list',
@@ -13,6 +13,10 @@ import {StatsService} from '../stats/stats.service';
 })
 export class TodoListPage implements OnInit {
 
+    @ViewChild('searchSelect') searchSelect: IonSelect;
+    searchSelectValue: string;
+
+    searchOptions = ['Title', 'Year', 'Difficulty'];
     originalTodoList: any[];
     searchBarValue = '';
     todoList: any[];
@@ -26,6 +30,7 @@ export class TodoListPage implements OnInit {
     }
 
     ngOnInit() {
+        this.searchSelect.ionChange.subscribe((value) => this.searchSelectValue = value.detail.value);
         this.todoList = [];
         this.getTodoList();
     }

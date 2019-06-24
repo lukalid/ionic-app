@@ -25,7 +25,14 @@
 
   <ion-grid>
     <ion-row>
-      <ion-searchbar (input)="search($event)"></ion-searchbar>
+      <ion-col size="8">
+        <ion-searchbar (input)="search($event)"></ion-searchbar>
+      </ion-col>
+      <ion-col>
+        <ion-select appAvatarColor #searchSelect interface="popover" [value]="searchOptions[0]">
+          <ion-select-option *ngFor="let searchOption of searchOptions" [value]="searchOption">{{ searchOption }}</ion-select-option>
+        </ion-select>
+      </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
@@ -66,7 +73,7 @@
   </ion-grid>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let todo of todoList | filter:filterStatus | sort:sortFunction | search:searchBarValue; let i = index">
+    <ion-item-sliding *ngFor="let todo of todoList | filter:filterStatus | sort:sortFunction | search:searchBarValue:searchSelectValue; let i = index">
       <ion-item>
         <ion-label>
           <ion-grid>

@@ -25,4 +25,8 @@ export class Util {
         return this.avatarColor;
     }
 
+    static getYearFromDate(date: string) {
+        return Number(String(date).split('-')[0]);
+    }
+
 }
