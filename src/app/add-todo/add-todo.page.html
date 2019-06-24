@@ -35,7 +35,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">TO DO Date</ion-label>
-        <ion-datetime formControlName="date" min="2019" max="2021" displayFormat="DD/MM/YYYY"></ion-datetime>
+        <ion-datetime formControlName="date" [min]="minYear" [max]="maxYear" displayFormat="DD/MM/YYYY"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">TO DO Difficulty</ion-label>

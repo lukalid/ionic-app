@@ -13,6 +13,8 @@ import { TodoService } from '../todo-list/todo.service';
 export class EditTodoPage implements OnInit {
 
   form: FormGroup;
+  minYear = new Date().getFullYear();
+  maxYear = this.minYear + 5;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
               private utilService: UtilService, private router: Router) { }

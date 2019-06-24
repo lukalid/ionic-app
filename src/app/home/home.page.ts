@@ -19,9 +19,7 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.getNewAvatar();
-    firebase.auth().onAuthStateChanged(() => {
-        this.changeDetectorRef.detectChanges();
-    });
+    firebase.auth().onAuthStateChanged(() => this.changeDetectorRef.detectChanges());
   }
 
   private getNewAvatar() {

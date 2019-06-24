@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { TodoService } from './todo.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -19,7 +19,8 @@ export class TodoListPage implements OnInit {
 
     constructor(private router: Router, private authService: AuthService,
                 private todoService: TodoService, private utilService: UtilService,
-                private alertController: AlertController, private changeDetectorRef: ChangeDetectorRef) {
+                private alertController: AlertController, private changeDetectorRef: ChangeDetectorRef,
+                private ngZone: NgZone) {
     }
 
     ngOnInit() {
@@ -228,6 +229,10 @@ export class TodoListPage implements OnInit {
                 loading.dismiss();
                 this.utilService.showToast(error, 'danger');
             });
+    }
+
+    onAdd() {
+        this.ngZone.run(() => this.router.navigateByUrl('/add-todo'));
     }
 
 }

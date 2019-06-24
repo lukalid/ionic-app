@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Util } from '../util/util';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TodoService } from '../todo-list/todo.service';
 import { UtilService } from '../util/util.service';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-todo',
@@ -14,11 +13,12 @@ import { Router } from '@angular/router';
 export class AddTodoPage implements OnInit {
 
   form: FormGroup;
+  minYear = new Date().getFullYear();
+  maxYear = this.minYear + 5;
 
-  constructor(private formBuilder: FormBuilder,
-              private utilService: UtilService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private utilService: UtilService, private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.form = this.createForm();
   }
 
@@ -27,7 +27,7 @@ export class AddTodoPage implements OnInit {
       title: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.required])],
       date: [null, Validators.compose([Validators.required])],
-      difficulty: [null, Validators.compose([Validators.required])]
+      difficulty: [5, Validators.compose([Validators.required])]
     });
   }
 
