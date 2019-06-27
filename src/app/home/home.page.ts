@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Util } from '../util/util';
 import { AuthService } from '../auth/auth.service';
 import * as firebase from 'firebase';
@@ -11,8 +11,8 @@ import { UtilService } from '../util/util.service';
 })
 export class HomePage implements OnInit {
 
+  @ViewChild('avatarImage') avatarImage: ElementRef;
   showHeader: boolean;
-  avatarUrl: string;
 
   constructor(private changeDetectorRef: ChangeDetectorRef, private utilService: UtilService) { }
 
@@ -32,12 +32,21 @@ export class HomePage implements OnInit {
     });
   }
 
-  private getNewAvatar() {
-    this.avatarUrl = Util.generateAvatarUrl();
+  private async getNewAvatar() {
+    const load = await this.utilService.createLoading('You finally figured it out...');
+    load.present();
+    const avatarImage = this.avatarImage.nativeElement;
+    avatarImage.onload = this.changeAvatar.bind(this, load);
+    avatarImage.src = Util.generateAvatarUrl();
   }
 
   isUserSignedIn() {
     return AuthService.isUserSignedIn();
+  }
+
+  changeAvatar(load) {
+      Util.avatarColorChanged.next();
+      load.dismiss();
   }
 
 }

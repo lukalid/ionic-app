@@ -13,7 +13,6 @@ export class Util {
         const nose = this.possibleNoses[Math.floor(Math.random() * 8)];
         const mouth = this.possibleMouths[Math.floor(Math.random() * 8)];
         this.generateAvatarColor();
-        this.avatarColorChanged.next();
         return `https://api.adorable.io/avatars/face/${eyes}/${nose}/${mouth}/${this.avatarColor.substring(1)}`;
     }
 
